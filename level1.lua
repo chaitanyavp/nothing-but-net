@@ -175,18 +175,13 @@ function scene:create( event )
 	target.x = 3*screenW/4
 	target.y = screenH/2
 	physics.addBody(target, "static");
+	target.myName = "target"
 	
 	local targetHitbox = display.newRect(3*screenW/4, screenH/2-(target.contentHeight/2), 
 		3*target.contentWidth/4, target.contentHeight/4)
 	targetHitbox:setFillColor(0,0,0,0)
 	physics.addBody(targetHitbox, "static");
 	targetHitbox.myName = "targetHitbox"
-	
-	local function onLocalCollision (self, event)
-		
-	end
-	crate.collision = onLocalCollision
-	crate:addEventListener("collision")
 
 	local function animationHeartBeat(event)
 		local vx,vy = crate:getLinearVelocity()
@@ -201,9 +196,22 @@ function scene:create( event )
 		and (event.other.myName == "crate") then
 			spawnX:removeSelf( )
 			spawnY:removeSelf( )
+			local starCount
+			if (spawnCount == 1) then
+				starCount = 3
+			end
+		    if (spawnCount == 2) then
+				starCount = 2
+			end
+			if (spawnCount > 2) then 
+				starCount = 1
+			end
+	 
+
 			local options = {
 				effect = "fade",
 				params = {
+					stars = starCount,
 					score = spawnCount 
 				}
 			}
