@@ -58,16 +58,31 @@ function scene:create( event )
 	local black_star3 = display.newImageRect( "black_star.png", 60, 50 )
 	black_star3.x, black_star3.y = display.contentWidth *0.75, 50
 
+	--inserting thus far to scene
+	sceneGroup:insert( background )
+	sceneGroup:insert( black_star1 )
+	sceneGroup:insert( black_star2 )
+	sceneGroup:insert( black_star3 )
+
 	--Gold stars (shown by default)
 
+	if (event.params.stars>=1) then
 	local gold_star1 = display.newImageRect( "gold_star.png", 60, 50 )
 	gold_star1.x, gold_star1.y = display.contentWidth *0.25, 50
+	sceneGroup:insert( gold_star1 )
+	end 
 
+	if (event.params.stars>=2) then
 	local gold_star2 = display.newImageRect( "gold_star.png", 60, 50 )
 	gold_star2.x, gold_star2.y = display.contentWidth *0.50, 50
+	sceneGroup:insert( gold_star2 )
+	end
 
+	if (event.params.stars>=3) then
 	local gold_star3 = display.newImageRect( "gold_star.png", 60, 50 )
 	gold_star3.x, gold_star3.y = display.contentWidth *0.75, 50
+	sceneGroup:insert( gold_star3 )
+	end
 
 	--score text
 	local current_score = display.newText(event.params.score, display.contentWidth *0.5, display.contentHeight*0.3, system.nativeFont, 50 )
@@ -97,13 +112,7 @@ function scene:create( event )
 	replayBtn.y = display.contentHeight - 175
 	
 	-- all display objects must be inserted into group
-	sceneGroup:insert( background )
-	sceneGroup:insert( black_star1 )
-	sceneGroup:insert( black_star2 )
-	sceneGroup:insert( black_star3 )
-	sceneGroup:insert( gold_star1 )
-	sceneGroup:insert( gold_star2 )
-	sceneGroup:insert( gold_star3 )
+	
 	sceneGroup:insert( playBtn )
 	sceneGroup:insert( replayBtn )
 	sceneGroup:insert( current_score )

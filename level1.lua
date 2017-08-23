@@ -195,9 +195,22 @@ function scene:create( event )
 		if ( event.phase == "ended" ) then
 			spawnX:removeSelf( )
 			spawnY:removeSelf( )
+			local starCount
+			if (spawnCount == 1) then
+				starCount = 3
+			end
+		    if (spawnCount == 2) then
+				starCount = 2
+			end
+			if (spawnCount > 2) then 
+				starCount = 1
+			end
+	 
+
 			local options = {
 				effect = "fade",
 				params = {
+					stars = starCount,
 					score = spawnCount 
 				}
 			}
