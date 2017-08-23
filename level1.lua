@@ -25,7 +25,7 @@ function scene:create( event )
 
 	local sceneGroup = self.view
 
-	local bounceCount = 0
+	local spawnCount = 0
 
 	-- create a grey rectangle as the backdrop
 	local background = display.newImageRect("sky3.jpg", screenW, screenH )
@@ -66,6 +66,8 @@ function scene:create( event )
 	spawnY:addEventListener( "userInput", textListenerY )
 	spawnRotation:addEventListener( "userInput", textListenerRotation )
 
+	local spawnCounter = display.newText( tostring(spawnCount), screenW*0.80, screenH*0.1, system.nativefont,30 )
+
 
 	--button to get values
 	local widget = require( "widget" )
@@ -75,6 +77,8 @@ function scene:create( event )
 	 
 	    if ( "ended" == event.phase ) then
 	        if (rotation ~= 0) then
+	        	spawnCount = spawnCount + 1
+	        	spawnCounter.text = spawnCount
 	        	local rect = display.newRect(math.random(10,screenW), screenH/2, xVal, yVal)
 	        	rect.rotation = rotation;
 
@@ -191,9 +195,15 @@ function scene:create( event )
 		if ( event.phase == "ended" ) then
 			spawnX:removeSelf( )
 			spawnY:removeSelf( )
+			local options = {
+				effect = "fade",
+				params = {
+					score = spawnCount 
+				}
+			}
 			spawnRotation:removeSelf( )
 
-			composer.gotoScene( "win" )
+			composer.gotoScene( "win", options)
 		end
 	end
 	target.collision = onTargetCollision
@@ -204,6 +214,7 @@ function scene:create( event )
 	sceneGroup:insert( spawnX )
 	sceneGroup:insert( spawnY )
 	sceneGroup:insert( spawnRotation )
+	sceneGroup:insert( spawnCounter )
 	sceneGroup:insert( button1 )
 	sceneGroup:insert( grass)
 	sceneGroup:insert( crate )
