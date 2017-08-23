@@ -26,6 +26,7 @@ local function onPlayBtnRelease()
 	
 	-- go to level1.lua scene
 	--temp, change when level# passed
+	composer.removeScene("level1")
 	composer.gotoScene( "level1", "fromRight", 500 )
 	
 	return true	-- indicates successful touch
