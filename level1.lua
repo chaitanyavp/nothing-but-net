@@ -176,12 +176,6 @@ function scene:create( event )
 	target.y = display.contentHeight/2
 	physics.addBody(target, "static");
 	target.myName = "target"
-	
-	local function onLocalCollision (self, event)
-		
-	end
-	crate.collision = onLocalCollision
-	crate:addEventListener("collision")
 
 	local function animationHeartBeat(event)
 		local vx,vy = crate:getLinearVelocity()
