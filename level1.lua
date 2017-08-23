@@ -171,11 +171,16 @@ function scene:create( event )
 	physics.addBody( grass, "static", { friction=0.8, shape=grassShape } )
 	
 	-- create a target to hit
-	local target = display.newImage("tile.jpg")
-	target.x = 3*display.contentWidth/4
-	target.y = display.contentHeight/2
+	local target = display.newImage("net.png")
+	target.x = 3*screenW/4
+	target.y = screenH/2
 	physics.addBody(target, "static");
-	target.myName = "target"
+	
+	local targetHitbox = display.newRect(3*screenW/4, screenH/2-(target.contentHeight/2), 
+		3*target.contentWidth/4, target.contentHeight/4)
+	targetHitbox:setFillColor(0,0,0,0)
+	physics.addBody(targetHitbox, "static");
+	targetHitbox.myName = "targetHitbox"
 	
 	local function onLocalCollision (self, event)
 		
@@ -207,8 +212,8 @@ function scene:create( event )
 			composer.gotoScene( "win", options)
 		end
 	end
-	target.collision = onTargetCollision
-	target:addEventListener("collision")
+	targetHitbox.collision = onTargetCollision
+	targetHitbox:addEventListener("collision")
 	
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
