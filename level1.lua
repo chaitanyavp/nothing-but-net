@@ -84,6 +84,7 @@ function scene:create( event )
 	        	local randBlue  = math.random(0,1)
 
 	        	rect:setFillColor(randRed,randGreen,randBlue)
+	        	sceneGroup:insert(rect)
 	        	physics.addBody( rect, "static")
 	        	function rect:touch( event )
 				 if event.phase == "began" then
@@ -188,7 +189,11 @@ function scene:create( event )
 	
 	local function onTargetCollision (self, event)
 		if ( event.phase == "ended" ) then
-			print( "ended: " .. self.myName .. " and " .. event.other.myName )
+			spawnX:removeSelf( )
+			spawnY:removeSelf( )
+			spawnRotation:removeSelf( )
+
+			composer.gotoScene( "win" )
 		end
 	end
 	target.collision = onTargetCollision
@@ -202,6 +207,7 @@ function scene:create( event )
 	sceneGroup:insert( button1 )
 	sceneGroup:insert( grass)
 	sceneGroup:insert( crate )
+	sceneGroup:insert( target )
 end
 
 
@@ -230,8 +236,9 @@ function scene:hide( event )
 		--
 		-- INSERT code here to pause the scene
 		-- e.g. stop timers, stop animation, unload sounds, etc.)
-		physics.stop()
 	elseif phase == "did" then
+		physics.stop()
+
 		-- Called when the scene is now off screen
 	end	
 	
@@ -243,7 +250,7 @@ function scene:destroy( event )
 	-- 
 	-- INSERT code here to cleanup the scene
 	-- e.g. remove display objects, remove touch listeners, save state, etc.
-	local sceneGroup = self.view
+	local sceneGroup = nil
 	
 	package.loaded[physics] = nil
 	physics = nil
