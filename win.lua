@@ -21,8 +21,6 @@ local widget = require "widget"
 local playBtn
 local replayBtn
 --GET SCORE PASSED IN
-local score = 0
-
 -- 'onRelease' event listener for playBtn
 local function onPlayBtnRelease()
 	
@@ -72,7 +70,7 @@ function scene:create( event )
 	gold_star3.x, gold_star3.y = display.contentWidth *0.75, 50
 
 	--score text
-	local current_score = display.newText( score, display.contentWidth *0.5, display.contentHeight*0.3, system.nativeFont, 50 )
+	local current_score = display.newText(event.params.score, display.contentWidth *0.5, display.contentHeight*0.3, system.nativeFont, 50 )
 	
 	-- create a widget button (which will loads level1.lua on release)
 	playBtn = widget.newButton{
@@ -116,12 +114,13 @@ function scene:show( event )
 	local phase = event.phase
 	
 	if phase == "will" then
-		-- Called when the scene is still off screen and is about to move on screen
 	elseif phase == "did" then
 		-- Called when the scene is now on screen
 		-- 
 		-- INSERT code here to make the scene come alive
 		-- e.g. start timers, begin animation, play audio, etc.
+				score = event.params.score
+
 	end	
 end
 
