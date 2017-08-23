@@ -146,7 +146,7 @@ function scene:create( event )
 	
 	-- add physics to the crate
 	physics.addBody( crate, { density=0.1, bounce=1, friction=0.5, radius=20} )
-  crate.myName = "crate"
+	crate.myName = "crate"
 	
 	-- create a grass object and add physics (with custom shape)
 	local grass = display.newImageRect( "ground.png", screenW, 82 )
@@ -188,7 +188,8 @@ function scene:create( event )
 	timer.performWithDelay( 1000, animationHeartBeat)
 	
 	local function onTargetCollision (self, event)
-		if ( event.phase == "ended" ) then
+		if ( event.phase == "ended" ) 
+		and (event.other.myName == "crate") then
 			spawnX:removeSelf( )
 			spawnY:removeSelf( )
 			spawnRotation:removeSelf( )
