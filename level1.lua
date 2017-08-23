@@ -68,8 +68,6 @@ function scene:create( event )
 	spawnRotation:addEventListener( "userInput", textListenerRotation )
 
 
-
-
 	--button to get values
 	local widget = require( "widget" )
  
@@ -139,6 +137,7 @@ function scene:create( event )
 	
 	-- add physics to the crate
 	physics.addBody( crate, { density=0.1, bounce=1, friction=0.5, radius=10} )
+	crate.myName = "crate"
 	
 	-- create a grass object and add physics (with custom shape)
 	local grass = display.newImageRect( "grass.png", screenW, 82 )
@@ -157,7 +156,14 @@ function scene:create( event )
 	-- define a shape that's slightly shorter than image bounds (set draw mode to "hybrid" or "debug" to see)
 	local grassShape = { -halfW,-34, halfW,-34, halfW,34, -halfW,34 }
 	physics.addBody( grass, "static", { friction=0.8, shape=grassShape } )
-
+	
+	-- create a target to hit
+	local target = display.newImage("tile.jpg")
+	target.x = 3*display.contentWidth/4
+	target.y = display.contentHeight/2
+	physics.addBody(target, "static");
+	target.myName = "target"
+	
 	local function onLocalCollision (self, event)
 		
 	end
@@ -171,6 +177,14 @@ function scene:create( event )
 		end
 	end
 	timer.performWithDelay( 1000, animationHeartBeat)
+	
+	local function onTargetCollision (self, event)
+		if ( event.phase == "ended" ) then
+			print( "ended: " .. self.myName .. " and " .. event.other.myName )
+		end
+	end
+	target.collision = onTargetCollision
+	target:addEventListener("collision")
 	
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
