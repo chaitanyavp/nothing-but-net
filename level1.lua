@@ -28,10 +28,9 @@ function scene:create( event )
 	local bounceCount = 0
 
 	-- create a grey rectangle as the backdrop
-	local background = display.newRect( 0, 0, screenW, screenH )
+	local background = display.newImageRect("sky3.jpg", screenW, screenH )
 	background.anchorX = 0
 	background.anchorY = 0
-	background:setFillColor( .5 )
 
 	--display x/y input
 	local spawnX = native.newTextField( screenW/2, -20, 50, 15 )
@@ -78,6 +77,13 @@ function scene:create( event )
 	        if (rotation ~= 0) then
 	        	local rect = display.newRect(math.random(10,screenW), screenH/2, xVal, yVal)
 	        	rect.rotation = rotation;
+
+	        	--generate random rect colors (TODO: different colors mean different densities later on)
+	        	local randRed  = math.random(0,1)
+	        	local randGreen  = math.random(0,1)
+	        	local randBlue  = math.random(0,1)
+
+	        	rect:setFillColor(randRed,randGreen,randBlue)
 	        	physics.addBody( rect, "static")
 	        	function rect:touch( event )
 				 if event.phase == "began" then
@@ -132,15 +138,17 @@ function scene:create( event )
 	)
 	
 	-- make a crate (off-screen), position it, and rotate slightly
-	local crate = display.newCircle(90, 90, 10)
+	local crate = display.newCircle(90, 90, 20)
 	crate.rotation = 0
+
+	crate.fill = {type="image", filename="ball.png"}
 	
 	-- add physics to the crate
-	physics.addBody( crate, { density=0.1, bounce=1, friction=0.5, radius=10} )
-	crate.myName = "crate"
+	physics.addBody( crate, { density=0.1, bounce=1, friction=0.5, radius=20} )
+  crate.myName = "crate"
 	
 	-- create a grass object and add physics (with custom shape)
-	local grass = display.newImageRect( "grass.png", screenW, 82 )
+	local grass = display.newImageRect( "ground.png", screenW, 82 )
 	grass.anchorX = 0
 	grass.anchorY = 1
 	grass.x, grass.y = 0, display.contentHeight
@@ -188,6 +196,10 @@ function scene:create( event )
 	
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
+	sceneGroup:insert( spawnX )
+	sceneGroup:insert( spawnY )
+	sceneGroup:insert( spawnRotation )
+	sceneGroup:insert( button1 )
 	sceneGroup:insert( grass)
 	sceneGroup:insert( crate )
 end
