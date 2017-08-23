@@ -11,7 +11,7 @@ local scene = composer.newScene()
 local physics = require "physics"
 physics.start(); physics.pause()
 
---------------------------------------------
+--------------------------------------------	
 
 -- forward declarations and other locals
 local screenW, screenH, halfW = display.contentWidth, display.contentHeight, display.contentWidth*0.5
@@ -25,36 +25,64 @@ function scene:create( event )
 
 	local sceneGroup = self.view
 
+	local bounceCount = 0
+
 	-- create a grey rectangle as the backdrop
 	local background = display.newRect( 0, 0, screenW, screenH )
 	background.anchorX = 0
 	background.anchorY = 0
 	background:setFillColor( .5 )
+
+	--display bounce counter
+	local tapText = display.newText(bounceCount, display.contentCenterX, 20, native.systemFont, 40)
 	
 	-- make a crate (off-screen), position it, and rotate slightly
 	local crate = display.newImageRect( "crate.png", 90, 90 )
 	crate.x, crate.y = 160, -100
 	crate.rotation = 15
-
-	-- make a crate2 (off-screen), position it, and rotate slightly
-	local crate2 = display.newImageRect( "crate.png", 180, 90 )
-	crate2.x, crate.y = 180, -100
-	crate2.rotation = 30
 	
 	-- add physics to the crate
-	physics.addBody( crate, { density=1.0, friction=0.3, bounce=0.1 } )
-		physics.addBody( crate2, { density=1.0, friction=0.3, bounce=0.9 } )
-
+	physics.addBody( crate, { density=0.1, bounce=0.2, friction=0.5 } )
 	
 	-- create a grass object and add physics (with custom shape)
 	local grass = display.newImageRect( "grass.png", screenW, 82 )
 	grass.anchorX = 0
 	grass.anchorY = 1
 	grass.x, grass.y = 0, display.contentHeight
+
+	--create left/right borders and add physics
+
+	local leftBorder = display.newRect(0,screenH/2,1,screenH*2)
+	physics.addBody(leftBorder, "static", {bounce=0.2,friction=0.3})
+
+
+	local rightBorder = display.newRect(screenW,screenH/2,1,screenH*2)
+	physics.addBody(rightBorder, "static", {bounce=0.2,friction=0.3})
 	
 	-- define a shape that's slightly shorter than image bounds (set draw mode to "hybrid" or "debug" to see)
 	local grassShape = { -halfW,-34, halfW,-34, halfW,34, -halfW,34 }
-	physics.addBody( grass, "static", { friction=0.3, shape=grassShape } )
+	physics.addBody( grass, "static", { friction=0.8, shape=grassShape } )
+
+	local function onLocalCollision (self, event)
+		bounceCount = 0
+		tapText.text = bounceCount
+	end
+	grass.collision = onLocalCollision
+	grass:addEventListener("collision")
+
+	--add tap to bounce function to crate
+	local function bounce()
+		local randY = (-1)* math.random(8,15)
+		local randX = math.random(1,9)
+		if (randX%2==0) then
+			randX=(-1)*randX
+		end
+		crate:applyLinearImpulse( randX, randY, crate.x, crate.y)
+		bounceCount = bounceCount + 1
+		tapText.text = bounceCount
+	end
+
+	crate:addEventListener("tap", bounce)
 	
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
