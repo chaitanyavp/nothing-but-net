@@ -33,8 +33,65 @@ function scene:create( event )
 	background.anchorY = 0
 	background:setFillColor( .5 )
 
-	--display bounce counter
-	local tapText = display.newText(bounceCount, display.contentCenterX, 20, native.systemFont, 40)
+	--display x/y input
+	local spawnX = native.newTextField( screenW/2, -20, 30, 15 )
+	spawnX.inputType = "number"
+	local spawnY = native.newTextField( screenW/2, 0, 30, 15 )
+    spawnY.inputType = "number"
+
+	local xVal = 0
+	local yVal = 0
+
+	local function textListenerX(event)
+		if (event.phase == "ended") then
+		 	xVal = tonumber(event.target.text)
+		end
+	end
+
+	local function textListenerY(event)
+		if (event.phase == "ended") then
+		 	yVal = tonumber(event.target.text)
+		end
+	end
+
+	spawnX:addEventListener( "userInput", textListenerX )
+	spawnY:addEventListener( "userInput", textListenerY )
+
+
+
+	--button to get values
+	local widget = require( "widget" )
+ 
+	-- Function to handle button events
+	local function handleButtonEvent( event )
+	 
+	    if ( "ended" == event.phase ) then
+	        if (xVal ~= 0) then
+	        	local rect = display.newRect(math.random(10,screenW), screenH/2, xVal, yVal)
+	        	physics.addBody( rect, "dynamic", {density=1.0} )
+	        end
+	    end
+	end
+	 
+	-- Create the widget
+	local button1 = widget.newButton(
+	    {
+	        left = screenW/2-35,
+	        top = 10,
+	        id = "coordinateButton",
+	        label = "Spawn!",
+	        onEvent = handleButtonEvent,
+		    emboss = true,
+	        -- Properties for a rounded rectangle button
+	        shape = "roundedRect",
+	        width = 70,
+	        height = 30,
+	        cornerRadius = 2,
+	        fillColor = { default={1,1,1,1}, over={1,0.1,0.7,0.4} },
+	        strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
+	        strokeWidth = 4
+	    }
+	)
 	
 	-- make a crate (off-screen), position it, and rotate slightly
 	local crate = display.newImageRect( "crate.png", 90, 90 )
@@ -42,7 +99,7 @@ function scene:create( event )
 	crate.rotation = 15
 	
 	-- add physics to the crate
-	physics.addBody( crate, { density=0.1, bounce=0.2, friction=0.5 } )
+	physics.addBody( crate, { density=0.1, bounce=0.8, friction=0.5 } )
 	
 	-- create a grass object and add physics (with custom shape)
 	local grass = display.newImageRect( "grass.png", screenW, 82 )
@@ -55,7 +112,6 @@ function scene:create( event )
 	local leftBorder = display.newRect(0,screenH/2,1,screenH*2)
 	physics.addBody(leftBorder, "static", {bounce=0.2,friction=0.3})
 
-
 	local rightBorder = display.newRect(screenW,screenH/2,1,screenH*2)
 	physics.addBody(rightBorder, "static", {bounce=0.2,friction=0.3})
 	
@@ -65,24 +121,9 @@ function scene:create( event )
 
 	local function onLocalCollision (self, event)
 		bounceCount = 0
-		tapText.text = bounceCount
 	end
 	grass.collision = onLocalCollision
 	grass:addEventListener("collision")
-
-	--add tap to bounce function to crate
-	local function bounce()
-		local randY = (-1)* math.random(8,15)
-		local randX = math.random(1,9)
-		if (randX%2==0) then
-			randX=(-1)*randX
-		end
-		crate:applyLinearImpulse( randX, randY, crate.x, crate.y)
-		bounceCount = bounceCount + 1
-		tapText.text = bounceCount
-	end
-
-	crate:addEventListener("tap", bounce)
 	
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
