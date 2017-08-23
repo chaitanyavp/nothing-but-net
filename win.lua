@@ -1,0 +1,166 @@
+-----------------------------------------------------------------------------------------
+--
+-- win.lua
+--
+-----------------------------------------------------------------------------------------
+
+--TODO: find way to pass level score, # of stars and current level number
+--level score displayed on screen
+--# of stars to display correct # of stars
+--current level number to be able to know/proceed to next level
+
+local composer = require( "composer" )
+local scene = composer.newScene()
+
+-- include Corona's "widget" library
+local widget = require "widget"
+
+--------------------------------------------
+
+-- forward declarations and other locals
+local playBtn
+local replayBtn
+--GET SCORE PASSED IN
+local score = 0
+
+-- 'onRelease' event listener for playBtn
+local function onPlayBtnRelease()
+	
+	-- go to level1.lua scene
+	--temp, change when level# passed
+	composer.gotoScene( "level1", "fromRight", 500 )
+	
+	return true	-- indicates successful touch
+end
+
+function scene:create( event )
+	local sceneGroup = self.view
+
+	-- Called when the scene's view does not exist.
+	-- 
+	-- INSERT code here to initialize the scene
+	-- e.g. add display objects to 'sceneGroup', add touch listeners, etc.
+
+	-- display a background image
+	-- create a grey rectangle as the backdrop
+	local background = display.newImageRect( "background.jpg", display.actualContentWidth, display.actualContentHeight )
+	background.x = display.contentWidth *0.5
+	background.y = display.contentHeight *0.5
+
+	--HOW THIS WORKS: black stars are rendered under gold, hide gold based on score passed in as parameter
+
+	--Black stars (hide gold stars to see)
+
+	local black_star1 = display.newImageRect( "black_star.png", 60, 50 )
+	black_star1.x, black_star1.y = display.contentWidth *0.25, 50
+
+	local black_star2 = display.newImageRect( "black_star.png", 60, 50 )
+	black_star2.x, black_star2.y = display.contentWidth *0.50, 50
+
+	local black_star3 = display.newImageRect( "black_star.png", 60, 50 )
+	black_star3.x, black_star3.y = display.contentWidth *0.75, 50
+
+	--Gold stars (shown by default)
+
+	local gold_star1 = display.newImageRect( "gold_star.png", 60, 50 )
+	gold_star1.x, gold_star1.y = display.contentWidth *0.25, 50
+
+	local gold_star2 = display.newImageRect( "gold_star.png", 60, 50 )
+	gold_star2.x, gold_star2.y = display.contentWidth *0.50, 50
+
+	local gold_star3 = display.newImageRect( "gold_star.png", 60, 50 )
+	gold_star3.x, gold_star3.y = display.contentWidth *0.75, 50
+
+	--score text
+	local current_score = display.newText( score, display.contentWidth *0.5, display.contentHeight*0.3, system.nativeFont, 50 )
+	
+	-- create a widget button (which will loads level1.lua on release)
+	playBtn = widget.newButton{
+		label="Next Level",
+		labelColor = { default={255}, over={128} },
+		default="button.png",
+		over="button-over.png",
+		width=154, height=40,
+		onRelease = onPlayBtnRelease	-- event listener function
+	}
+	playBtn.x = display.contentWidth*0.5
+	playBtn.y = display.contentHeight - 125
+
+	-- create a widget button (which will loads level1.lua on release)
+	replayBtn = widget.newButton{
+		label="Play Again",
+		labelColor = { default={255}, over={128} },
+		default="button.png",
+		over="button-over.png",
+		width=154, height=40,
+		onRelease = onPlayBtnRelease	-- event listener function
+	}
+	replayBtn.x = display.contentWidth*0.5
+	replayBtn.y = display.contentHeight - 175
+	
+	-- all display objects must be inserted into group
+	sceneGroup:insert( background )
+	sceneGroup:insert( black_star1 )
+	sceneGroup:insert( black_star2 )
+	sceneGroup:insert( black_star3 )
+	sceneGroup:insert( gold_star1 )
+	sceneGroup:insert( gold_star2 )
+	sceneGroup:insert( gold_star3 )
+	sceneGroup:insert( playBtn )
+	sceneGroup:insert( replayBtn )
+	sceneGroup:insert( current_score )
+end
+
+function scene:show( event )
+	local sceneGroup = self.view
+	local phase = event.phase
+	
+	if phase == "will" then
+		-- Called when the scene is still off screen and is about to move on screen
+	elseif phase == "did" then
+		-- Called when the scene is now on screen
+		-- 
+		-- INSERT code here to make the scene come alive
+		-- e.g. start timers, begin animation, play audio, etc.
+	end	
+end
+
+function scene:hide( event )
+	local sceneGroup = self.view
+	local phase = event.phase
+	
+	if event.phase == "will" then
+		-- Called when the scene is on screen and is about to move off screen
+		--
+		-- INSERT code here to pause the scene
+		-- e.g. stop timers, stop animation, unload sounds, etc.)
+	elseif phase == "did" then
+		-- Called when the scene is now off screen
+	end	
+end
+
+function scene:destroy( event )
+	local sceneGroup = self.view
+	
+	-- Called prior to the removal of scene's "view" (sceneGroup)
+	-- 
+	-- INSERT code here to cleanup the scene
+	-- e.g. remove display objects, remove touch listeners, save state, etc.
+	
+	if playBtn then
+		playBtn:removeSelf()	-- widgets must be manually removed
+		playBtn = nil
+	end
+end
+
+---------------------------------------------------------------------------------
+
+-- Listener setup
+scene:addEventListener( "create", scene )
+scene:addEventListener( "show", scene )
+scene:addEventListener( "hide", scene )
+scene:addEventListener( "destroy", scene )
+
+-----------------------------------------------------------------------------------------
+
+return scene
