@@ -34,13 +34,16 @@ function scene:create( event )
 	background:setFillColor( .5 )
 
 	--display x/y input
-	local spawnX = native.newTextField( screenW/2, -20, 30, 15 )
+	local spawnX = native.newTextField( screenW/2, -20, 50, 15 )
 	spawnX.inputType = "number"
-	local spawnY = native.newTextField( screenW/2, 0, 30, 15 )
+	local spawnY = native.newTextField( screenW/2, 0, 50, 15 )
     spawnY.inputType = "number"
+    local spawnRotation = native.newTextField( screenW/2, 20, 50, 15 )
+    spawnRotation.inputType = "number"
 
 	local xVal = 0
 	local yVal = 0
+	local rotation = 0
 
 	local function textListenerX(event)
 		if (event.phase == "ended") then
@@ -54,8 +57,16 @@ function scene:create( event )
 		end
 	end
 
+	local function textListenerRotation(event)
+		if (event.phase == "ended") then
+		 	rotation = tonumber(event.target.text)
+		end
+	end
+
 	spawnX:addEventListener( "userInput", textListenerX )
 	spawnY:addEventListener( "userInput", textListenerY )
+	spawnRotation:addEventListener( "userInput", textListenerRotation )
+
 
 
 
@@ -66,9 +77,38 @@ function scene:create( event )
 	local function handleButtonEvent( event )
 	 
 	    if ( "ended" == event.phase ) then
-	        if (xVal ~= 0) then
+	        if (rotation ~= 0) then
 	        	local rect = display.newRect(math.random(10,screenW), screenH/2, xVal, yVal)
-	        	physics.addBody( rect, "dynamic", {density=1.0} )
+	        	rect.rotation = rotation;
+	        	physics.addBody( rect, "static")
+	        	function rect:touch( event )
+				 if event.phase == "began" then
+				  -- first we set the focus on the object
+				  display.getCurrentStage():setFocus( self, event.id )
+				  self.isFocus = true
+
+				  -- then we store the original x and y position
+				  self.markX = self.x
+				  self.markY = self.y
+
+				 elseif self.isFocus then
+
+				  if event.phase == "moved" then
+				   -- then drag our object
+				   self.x = event.x - event.xStart + self.markX
+				   self.y = event.y - event.yStart + self.markY
+				  elseif event.phase == "ended" or event.phase == "cancelled" then
+				   -- we end the movement by removing the focus from the object
+				   display.getCurrentStage():setFocus( self, nil )
+				   self.isFocus = false
+				 end
+				 end
+
+				 -- return true so Corona knows that the touch event was handled properly
+				 return true
+				end
+
+			rect:addEventListener("touch", rect )
 	        end
 	    end
 	end
@@ -77,7 +117,7 @@ function scene:create( event )
 	local button1 = widget.newButton(
 	    {
 	        left = screenW/2-35,
-	        top = 10,
+	        top = 30,
 	        id = "coordinateButton",
 	        label = "Spawn!",
 	        onEvent = handleButtonEvent,
@@ -94,12 +134,11 @@ function scene:create( event )
 	)
 	
 	-- make a crate (off-screen), position it, and rotate slightly
-	local crate = display.newImageRect( "crate.png", 90, 90 )
-	crate.x, crate.y = 160, -100
-	crate.rotation = 15
+	local crate = display.newCircle(90, 90, 10)
+	crate.rotation = 0
 	
 	-- add physics to the crate
-	physics.addBody( crate, { density=0.1, bounce=0.8, friction=0.5 } )
+	physics.addBody( crate, { density=0.1, bounce=1, friction=0.5, radius=10} )
 	
 	-- create a grass object and add physics (with custom shape)
 	local grass = display.newImageRect( "grass.png", screenW, 82 )
