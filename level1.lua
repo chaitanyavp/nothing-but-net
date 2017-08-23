@@ -182,6 +182,10 @@ function scene:create( event )
 	
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
+	sceneGroup:insert( spawnX )
+	sceneGroup:insert( spawnY )
+	sceneGroup:insert( spawnRotation )
+	sceneGroup:insert( button1 )
 	sceneGroup:insert( grass)
 	sceneGroup:insert( crate )
 end
