@@ -159,10 +159,18 @@ function scene:create( event )
 	physics.addBody( grass, "static", { friction=0.8, shape=grassShape } )
 
 	local function onLocalCollision (self, event)
-		bounceCount = 0
+		
 	end
-	grass.collision = onLocalCollision
-	grass:addEventListener("collision")
+	crate.collision = onLocalCollision
+	crate:addEventListener("collision")
+
+	local function animationHeartBeat(event)
+		local vx,vy = crate:getLinearVelocity()
+		if (math.abs(vy)<1) then
+		 crate:setLinearVelocity( 0, -100 )
+		end
+	end
+	timer.performWithDelay( 1000, animationHeartBeat)
 	
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
