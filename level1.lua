@@ -28,10 +28,9 @@ function scene:create( event )
 	local bounceCount = 0
 
 	-- create a grey rectangle as the backdrop
-	local background = display.newRect( 0, 0, screenW, screenH )
+	local background = display.newImageRect("sky3.jpg", screenW, screenH )
 	background.anchorX = 0
 	background.anchorY = 0
-	background:setFillColor( .5 )
 
 	--display x/y input
 	local spawnX = native.newTextField( screenW/2, -20, 50, 15 )
