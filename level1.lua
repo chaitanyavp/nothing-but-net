@@ -150,7 +150,7 @@ function scene:create( event )
 	
 	-- add physics to the crate
 	physics.addBody( crate, { density=0.1, bounce=1, friction=0.5, radius=20} )
-  crate.myName = "crate"
+	crate.myName = "crate"
 	
 	-- create a grass object and add physics (with custom shape)
 	local grass = display.newImageRect( "ground.png", screenW, 82 )
@@ -171,11 +171,17 @@ function scene:create( event )
 	physics.addBody( grass, "static", { friction=0.8, shape=grassShape } )
 	
 	-- create a target to hit
-	local target = display.newImage("tile.jpg")
-	target.x = 3*display.contentWidth/4
-	target.y = display.contentHeight/2
+	local target = display.newImage("net.png")
+	target.x = 3*screenW/4
+	target.y = screenH/2
 	physics.addBody(target, "static");
 	target.myName = "target"
+	
+	local targetHitbox = display.newRect(3*screenW/4, screenH/2-(target.contentHeight/2), 
+		3*target.contentWidth/4, target.contentHeight/4)
+	targetHitbox:setFillColor(0,0,0,0)
+	physics.addBody(targetHitbox, "static");
+	targetHitbox.myName = "targetHitbox"
 
 	local function animationHeartBeat(event)
 		local vx,vy = crate:getLinearVelocity()
@@ -186,7 +192,8 @@ function scene:create( event )
 	timer.performWithDelay( 1000, animationHeartBeat)
 	
 	local function onTargetCollision (self, event)
-		if ( event.phase == "ended" ) then
+		if ( event.phase == "ended" ) 
+		and (event.other.myName == "crate") then
 			spawnX:removeSelf( )
 			spawnY:removeSelf( )
 			local starCount
@@ -213,8 +220,8 @@ function scene:create( event )
 			composer.gotoScene( "win", options)
 		end
 	end
-	target.collision = onTargetCollision
-	target:addEventListener("collision")
+	targetHitbox.collision = onTargetCollision
+	targetHitbox:addEventListener("collision")
 	
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
