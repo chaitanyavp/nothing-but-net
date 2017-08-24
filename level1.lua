@@ -194,8 +194,14 @@ function scene:create( event )
 	local function onTargetCollision (self, event)
 		if ( event.phase == "ended" ) 
 		and (event.other.myName == "crate") then
+		
+		if (spawnX ~= nil) then
 			spawnX:removeSelf( )
+		end
+			if spawnY~= nil then
 			spawnY:removeSelf( )
+		end
+
 			local starCount
 			if (spawnCount == 1) then
 				starCount = 3
