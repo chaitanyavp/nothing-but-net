@@ -33,31 +33,44 @@ function scene:create( event )
 	-- e.g. add display objects to 'sceneGroup', add touch listeners, etc.
 
 	-- display a background image
-	local background = display.newImageRect( "background.jpg", display.contentWidth, display.contentHeight )
+	local background = display.newImageRect( "background.png", display.contentWidth, display.contentHeight )
 	background.anchorX = 0
 	background.anchorY = 0
 	background.x, background.y = 0, 0
 	
 	-- create/position logo/title image on upper-half of the screen
-	local titleLogo = display.newImageRect( "logo.png", 264, 42 )
+	local titleLogo = display.newImageRect( "logo.png", 264, 150 )
 	titleLogo.x = display.contentWidth * 0.5
 	titleLogo.y = 100
 	
 	-- create a widget button (which will loads level1.lua on release)
 	playBtn = widget.newButton{
 		label="Play Now",
-		labelColor = { default={255}, over={128} },
+		labelColor = { default={0}, over={128} },
 		default="button.png",
 		over="button-over.png",
-		width=154, height=40,
+		width=154, height=50,
 		onRelease = onPlayBtnRelease	-- event listener function
 	}
 	playBtn.x = display.contentWidth*0.5
-	playBtn.y = display.contentHeight - 125
+	playBtn.y = display.contentHeight - 150
+
+	-- create a widget button (which will loads level1.lua on release)
+	levelSelect = widget.newButton{
+		label="Select Level",
+		labelColor = { default={1,0,1}, over={128} },
+		default="button.png",
+		over="button-over.png",
+		width=154, height=20,
+		onRelease = levelSelectFunction	-- event listener function
+	}
+	levelSelect.x = display.contentWidth*0.5
+	levelSelect.y = display.contentHeight - 190
 	
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
 	sceneGroup:insert( titleLogo )
+	sceneGroup:insert( levelSelect)
 	sceneGroup:insert( playBtn )
 end
 
