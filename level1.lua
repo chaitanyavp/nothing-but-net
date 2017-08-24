@@ -31,6 +31,41 @@ function scene:create( event )
 	local background = display.newImageRect("sky3.jpg", screenW, screenH )
 	background.anchorX = 0
 	background.anchorY = 0
+	background.id = "background"
+
+	-- add a touch listener to draw line.
+	local drawX, drawY
+	local drawing = display.newGroup()
+
+	local function onDrawingCollision(self, event)
+		if ( event.phase == "ended" ) 
+		and (event.other.myName == "crate") then
+			drawing:removeSelf()
+			drawing = display.newGroup()
+		end
+	end
+
+	local function onBackgroundTouch( event )
+	    if ( event.phase == "began" ) then
+	    	drawX = event.x
+	    	drawY = event.y
+	    elseif ( event.phase == "moved" ) then
+	    	local rect = display.newRect(event.x,event.y,10,10)
+	    	physics.addBody( rect, "static")
+	    	local line = display.newLine(drawX,drawY,event.x,event.y)
+	    	line.strokeWidth = 10
+	    	drawing:insert( rect )
+			drawing:insert( line )
+	    	drawX = event.x
+	    	drawY = event.y
+
+			rect.collision = onDrawingCollision
+			rect:addEventListener("collision")
+		end
+	    return true
+	end
+	background:addEventListener( "touch", onBackgroundTouch )
+
 
 	--display x/y input
 	local spawnX = native.newTextField( screenW/2, -20, 50, 15 )
@@ -149,7 +184,7 @@ function scene:create( event )
 	crate.fill = {type="image", filename="ball.png"}
 	
 	-- add physics to the crate
-	physics.addBody( crate, { density=0.1, bounce=1, friction=0.5, radius=20} )
+	physics.addBody( crate, { density=0.1, bounce=1, friction=0, radius=20} )
 	crate.myName = "crate"
 	
 	-- create a grass object and add physics (with custom shape)
@@ -222,7 +257,7 @@ function scene:create( event )
 	end
 	targetHitbox.collision = onTargetCollision
 	targetHitbox:addEventListener("collision")
-	
+
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
 	sceneGroup:insert( spawnX )
