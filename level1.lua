@@ -62,7 +62,6 @@ function scene:create( event )
 			else
 				local xVel,yVel = event.other:getLinearVelocity()
 				event.other:setLinearVelocity(xVel, 1.4*yVel)
-				event.other:rotate(45)
 			    spawnCount = spawnCount - 1
 		    	spawnCounter.text = spawnCount
 				drawing:removeSelf()
