@@ -25,131 +25,84 @@ function scene:create( event )
 
 	local sceneGroup = self.view
 
-	local spawnCount = 0
+	local spawnCount = 10
 
 	-- create a grey rectangle as the backdrop
 	local background = display.newImageRect("sky3.jpg", screenW, screenH )
 	background.anchorX = 0
 	background.anchorY = 0
+	background.id = "background"
 
-	--display x/y input
-	local spawnX = native.newTextField( screenW/2, -20, 50, 15 )
-	spawnX.inputType = "number"
-	local spawnY = native.newTextField( screenW/2, 0, 50, 15 )
-    spawnY.inputType = "number"
-    local spawnRotation = native.newTextField( screenW/2, 20, 50, 15 )
-    spawnRotation.inputType = "number"
-
-	local xVal = 0
-	local yVal = 0
-	local rotation = 0
-
-	local function textListenerX(event)
-		if (event.phase == "ended") then
-		 	xVal = tonumber(event.target.text)
-		end
-	end
-
-	local function textListenerY(event)
-		if (event.phase == "ended") then
-		 	yVal = tonumber(event.target.text)
-		end
-	end
-
-	local function textListenerRotation(event)
-		if (event.phase == "ended") then
-		 	rotation = tonumber(event.target.text)
-		end
-	end
-
-	spawnX:addEventListener( "userInput", textListenerX )
-	spawnY:addEventListener( "userInput", textListenerY )
-	spawnRotation:addEventListener( "userInput", textListenerRotation )
-
+	--counter for lines spawned
 	local spawnCounter = display.newText( tostring(spawnCount), screenW*0.80, screenH*0.1, system.nativefont,30 )
 
+	local function lose()
+		local options = {
+			effect = "fromBottom",
+			params = {
+				stars = 0,
+				score = 0,
+				win = false
+			}
+		}
 
-	--button to get values
-	local widget = require( "widget" )
- 
-	-- Function to handle button events
-	local function handleButtonEvent( event )
-	 
-	    if ( "ended" == event.phase ) then
-	        if (rotation ~= 0) then
-	        	spawnCount = spawnCount + 1
-	        	spawnCounter.text = spawnCount
-	        	local rect = display.newRect(math.random(10,screenW), screenH/2, xVal, yVal)
-	        	rect.rotation = rotation;
-
-	        	--generate random rect colors (TODO: different colors mean different densities later on)
-	        	local randRed  = math.random(0,1)
-	        	local randGreen  = math.random(0,1)
-	        	local randBlue  = math.random(0,1)
-
-	        	rect:setFillColor(randRed,randGreen,randBlue)
-	        	sceneGroup:insert(rect)
-	        	physics.addBody( rect, "static")
-	        	function rect:touch( event )
-				 if event.phase == "began" then
-				  -- first we set the focus on the object
-				  display.getCurrentStage():setFocus( self, event.id )
-				  self.isFocus = true
-
-				  -- then we store the original x and y position
-				  self.markX = self.x
-				  self.markY = self.y
-
-				 elseif self.isFocus then
-
-				  if event.phase == "moved" then
-				   -- then drag our object
-				   self.x = event.x - event.xStart + self.markX
-				   self.y = event.y - event.yStart + self.markY
-				  elseif event.phase == "ended" or event.phase == "cancelled" then
-				   -- we end the movement by removing the focus from the object
-				   display.getCurrentStage():setFocus( self, nil )
-				   self.isFocus = false
-				 end
-				 end
-
-				 -- return true so Corona knows that the touch event was handled properly
-				 return true
-				end
-
-			rect:addEventListener("touch", rect )
-	        end
-	    end
+		composer.gotoScene( "win", options)
 	end
-	 
-	-- Create the widget
-	local button1 = widget.newButton(
-	    {
-	        left = screenW/2-35,
-	        top = 30,
-	        id = "coordinateButton",
-	        label = "Spawn!",
-	        onEvent = handleButtonEvent,
-		    emboss = true,
-	        -- Properties for a rounded rectangle button
-	        shape = "roundedRect",
-	        width = 70,
-	        height = 30,
-	        cornerRadius = 2,
-	        fillColor = { default={1,1,1,1}, over={1,0.1,0.7,0.4} },
-	        strokeColor = { default={1,0.4,0,1}, over={0.8,0.8,1,1} },
-	        strokeWidth = 4
-	    }
-	)
+
+	-- add a touch listener to draw line.
+	local drawX, drawY
+	local drawing = display.newGroup()
+
+	local function onDrawingCollision(self, event)
+		if ( event.phase == "ended" ) 
+		and (event.other.myName == "crate") then
+
+			if spawnCount == 0 then
+				lose()
+			else
+				local xVel,yVel = event.other:getLinearVelocity()
+				event.other:setLinearVelocity(xVel, 1.4*yVel)
+				event.other:rotate(45)
+			    spawnCount = spawnCount - 1
+		    	spawnCounter.text = spawnCount
+				drawing:removeSelf()
+				drawing = display.newGroup()
+				sceneGroup:insert(drawing)
+			end
+		end
+	end
+
+	local function onBackgroundTouch( event )
+	    if ( event.phase == "began" ) then
+	    	drawX = event.x
+	    	drawY = event.y
+	    elseif ( event.phase == "moved" ) then
+	    	local rect = display.newRect(event.x,event.y,8,8)
+	    	rect:setFillColor(0)
+	    	physics.addBody( rect, "static")
+	    	local line = display.newLine(drawX,drawY,event.x,event.y)
+	    	line.strokeWidth = 10
+	    	line:setStrokeColor(0)
+	    	drawing:insert( rect )
+			drawing:insert( line )
+	    	drawX = event.x
+	    	drawY = event.y
+			rect.collision = onDrawingCollision
+			rect:addEventListener("collision")
+		end
+	    return true
+	end
+	background:addEventListener( "touch", onBackgroundTouch )
+
 	
 	-- make a crate (off-screen), position it, and rotate slightly
 	local crate = display.newCircle(90, 90, 20)
-	crate.rotation = 0
+	crate.rotation = 10
 
 	crate.fill = {type="image", filename="ball.png"}
 	
 	-- add physics to the crate
-	physics.addBody( crate, { density=0.1, bounce=1, friction=0.5, radius=20} )
+	physics.addBody( crate, { density=0.1, bounce=0.8, friction=0.5, radius=20} )
 	crate.myName = "crate"
 	
 	-- create a grass object and add physics (with custom shape)
@@ -194,16 +147,8 @@ function scene:create( event )
 	local function onTargetCollision (self, event)
 		if ( event.phase == "ended" ) 
 		and (event.other.myName == "crate") then
-		
-		if (spawnX ~= nil) then
-			spawnX:removeSelf( )
-		end
-			if spawnY~= nil then
-			spawnY:removeSelf( )
-		end
-
 			local starCount
-			if (spawnCount == 1) then
+			if (spawnCount <= 1) then
 				starCount = 3
 			end
 		    if (spawnCount == 2) then
@@ -215,27 +160,23 @@ function scene:create( event )
 	 
 
 			local options = {
-				effect = "fade",
+				effect = "fromTop",
 				params = {
 					stars = starCount,
-					score = spawnCount 
+					score = spawnCount,
+					win = true
 				}
 			}
-			spawnRotation:removeSelf( )
 
 			composer.gotoScene( "win", options)
 		end
 	end
 	targetHitbox.collision = onTargetCollision
 	targetHitbox:addEventListener("collision")
-	
+
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
-	sceneGroup:insert( spawnX )
-	sceneGroup:insert( spawnY )
-	sceneGroup:insert( spawnRotation )
 	sceneGroup:insert( spawnCounter )
-	sceneGroup:insert( button1 )
 	sceneGroup:insert( grass)
 	sceneGroup:insert( crate )
 	sceneGroup:insert( target )

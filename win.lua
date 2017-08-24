@@ -51,13 +51,13 @@ function scene:create( event )
 
 	--Black stars (hide gold stars to see)
 
-	local black_star1 = display.newImageRect( "black_star.png", 60, 50 )
+	local black_star1 = display.newImageRect( "black_star.png", 45, 50 )
 	black_star1.x, black_star1.y = display.contentWidth *0.25, 50
 
-	local black_star2 = display.newImageRect( "black_star.png", 60, 50 )
+	local black_star2 = display.newImageRect( "black_star.png", 45, 50 )
 	black_star2.x, black_star2.y = display.contentWidth *0.50, 50
 
-	local black_star3 = display.newImageRect( "black_star.png", 60, 50 )
+	local black_star3 = display.newImageRect( "black_star.png", 45, 50 )
 	black_star3.x, black_star3.y = display.contentWidth *0.75, 50
 
 	--inserting thus far to scene
@@ -68,23 +68,33 @@ function scene:create( event )
 
 	--Gold stars (shown by default)
 
+	local function gold1()
 	if (event.params.stars>=1) then
 	local gold_star1 = display.newImageRect( "gold_star.png", 60, 50 )
 	gold_star1.x, gold_star1.y = display.contentWidth *0.25, 50
 	sceneGroup:insert( gold_star1 )
 	end 
+end
 
+	timer.performWithDelay(1000,gold1)
+
+	local function gold2()
 	if (event.params.stars>=2) then
 	local gold_star2 = display.newImageRect( "gold_star.png", 60, 50 )
 	gold_star2.x, gold_star2.y = display.contentWidth *0.50, 50
 	sceneGroup:insert( gold_star2 )
 	end
+end
+	timer.performWithDelay(1500,gold2)
 
+	local function gold3()
 	if (event.params.stars>=3) then
 	local gold_star3 = display.newImageRect( "gold_star.png", 60, 50 )
 	gold_star3.x, gold_star3.y = display.contentWidth *0.75, 50
 	sceneGroup:insert( gold_star3 )
 	end
+end
+	timer.performWithDelay(2100,gold3)
 
 	--score text
 	local current_score = display.newText(event.params.score, display.contentWidth *0.5, display.contentHeight*0.3, system.nativeFont, 50 )
@@ -101,6 +111,7 @@ function scene:create( event )
 	playBtn.x = display.contentWidth*0.5
 	playBtn.y = display.contentHeight - 125
 
+
 	-- create a widget button (which will loads level1.lua on release)
 	replayBtn = widget.newButton{
 		label="Play Again",
@@ -112,12 +123,17 @@ function scene:create( event )
 	}
 	replayBtn.x = display.contentWidth*0.5
 	replayBtn.y = display.contentHeight - 175
+
+	if event.params.win == false then
+		playBtn.isVisible = false
+		replayBtn.y = display.contentHeight - 150
+	end
 	
 	-- all display objects must be inserted into group
-	
 	sceneGroup:insert( playBtn )
 	sceneGroup:insert( replayBtn )
 	sceneGroup:insert( current_score )
+
 end
 
 function scene:show( event )
