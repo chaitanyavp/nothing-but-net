@@ -25,7 +25,7 @@ function scene:create( event )
 
 	local sceneGroup = self.view
 
-	local spawnCount = 0
+	local spawnCount = 10
 
 	-- create a grey rectangle as the backdrop
 	local background = display.newImageRect("sky3.jpg", screenW, screenH )
@@ -36,6 +36,19 @@ function scene:create( event )
 	--counter for lines spawned
 	local spawnCounter = display.newText( tostring(spawnCount), screenW*0.80, screenH*0.1, system.nativefont,30 )
 
+	local function lose()
+		local options = {
+			effect = "fromBottom",
+			params = {
+				stars = 0,
+				score = 0,
+				win = false
+			}
+		}
+
+		composer.gotoScene( "win", options)
+	end
+
 	-- add a touch listener to draw line.
 	local drawX, drawY
 	local drawing = display.newGroup()
@@ -43,14 +56,19 @@ function scene:create( event )
 	local function onDrawingCollision(self, event)
 		if ( event.phase == "ended" ) 
 		and (event.other.myName == "crate") then
-			local xVel,yVel = event.other:getLinearVelocity()
-			event.other:setLinearVelocity(xVel, 1.4*yVel)
-			event.other:rotate(45)
-		    spawnCount = spawnCount + 1
-	    	spawnCounter.text = spawnCount
-			drawing:removeSelf()
-			drawing = display.newGroup()
-			sceneGroup:insert(drawing)
+
+			if spawnCount == 0 then
+				lose()
+			else
+				local xVel,yVel = event.other:getLinearVelocity()
+				event.other:setLinearVelocity(xVel, 1.4*yVel)
+				event.other:rotate(45)
+			    spawnCount = spawnCount - 1
+		    	spawnCounter.text = spawnCount
+				drawing:removeSelf()
+				drawing = display.newGroup()
+				sceneGroup:insert(drawing)
+			end
 		end
 	end
 
@@ -145,7 +163,8 @@ function scene:create( event )
 				effect = "fromTop",
 				params = {
 					stars = starCount,
-					score = spawnCount 
+					score = spawnCount,
+					win = true
 				}
 			}
 

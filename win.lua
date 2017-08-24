@@ -111,6 +111,7 @@ end
 	playBtn.x = display.contentWidth*0.5
 	playBtn.y = display.contentHeight - 125
 
+
 	-- create a widget button (which will loads level1.lua on release)
 	replayBtn = widget.newButton{
 		label="Play Again",
@@ -122,12 +123,17 @@ end
 	}
 	replayBtn.x = display.contentWidth*0.5
 	replayBtn.y = display.contentHeight - 175
+
+	if event.params.win == false then
+		playBtn.isVisible = false
+		replayBtn.y = display.contentHeight - 150
+	end
 	
 	-- all display objects must be inserted into group
-	
 	sceneGroup:insert( playBtn )
 	sceneGroup:insert( replayBtn )
 	sceneGroup:insert( current_score )
+
 end
 
 function scene:show( event )
