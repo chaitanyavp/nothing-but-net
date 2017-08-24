@@ -53,7 +53,7 @@ function scene:create( event )
 			}
 		}
 
-		composer.gotoScene( "scenes.win", options)
+		composer.gotoScene( "win", options)
 	end
 
 	-- add a touch listener to draw line.
@@ -145,7 +145,7 @@ function scene:create( event )
 	local function animationHeartBeat(event)
 		local vx,vy = crate:getLinearVelocity()
 		if (math.abs(vy)<1) then
-		 crate:setLinearVelocity( 0, -50 )
+		 crate:setLinearVelocity( 0, -100 )
 		end
 	end
 	timer.performWithDelay( 1000, animationHeartBeat)
@@ -154,7 +154,6 @@ function scene:create( event )
 		if ( event.phase == "ended" ) 
 		and (event.other.myName == "crate") then
 			local starCount
-			print(spawnTries - spawnCount)
 			if ((spawnTries-spawnCount) <= threeStarCondition) then
 				starCount = 3
 			end
@@ -172,14 +171,12 @@ function scene:create( event )
 				effect = "fromTop",
 				params = {
 					stars = starCount,
-					print("ho"),
-					print(stars),
 					score = spawnCount,
 					win = true
 				}
 			}
 
-			composer.gotoScene( "scenes.win", options)
+			composer.gotoScene( "win", options)
 		end
 	end
 	targetHitbox.collision = onTargetCollision

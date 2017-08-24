@@ -26,9 +26,9 @@ local function onPlayBtnRelease()
 	
 	-- go to level1.lua scene
 	--temp, change when level# passed
-	composer.removeScene("scenes.levels.level1")
-	composer.removeScene("scenes.win")
-	composer.gotoScene( "scenes.levels.level1", "fromRight", 500 )
+	composer.removeScene("level1")
+	composer.removeScene("win")
+	composer.gotoScene( "level1", "fromRight", 500 )
 	
 	return true	-- indicates successful touch
 end
@@ -67,7 +67,6 @@ function scene:create( event )
 	sceneGroup:insert( black_star3 )
 
 	--Gold stars (shown by default)
-	print(event.params.stars)
 
 	local function gold1()
 	if (event.params.stars>=1) then
