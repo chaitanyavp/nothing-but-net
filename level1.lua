@@ -16,6 +16,13 @@ physics.start(); physics.pause()
 -- forward declarations and other locals
 local screenW, screenH, halfW = display.contentWidth, display.contentHeight, display.contentWidth*0.5
 
+--DECLARE STAR COUNT HERE:
+local threeStarCondition = 1
+local twoStarCondition = 2
+local oneStarCondition = 4
+--Number of tries allowed
+local spawnTries = 10
+
 function scene:create( event )
 
 	-- Called when the scene's view does not exist.
@@ -147,16 +154,18 @@ function scene:create( event )
 		if ( event.phase == "ended" ) 
 		and (event.other.myName == "crate") then
 			local starCount
-			if (spawnCount <= 1) then
+			if ((spawnTries-spawnCount) <= threeStarCondition) then
 				starCount = 3
 			end
-		    if (spawnCount == 2) then
+		    if ((spawnTries-spawnCount) == twoStarCondition) then
 				starCount = 2
 			end
-			if (spawnCount > 2) then 
+			if ((spawnTries-spawnCount) >=oneStarCondition ) then 
 				starCount = 1
 			end
-	 
+			if ((spawnTries - spawnCount) >= 5) then
+				starCount = 0
+			end	 
 
 			local options = {
 				effect = "fromTop",
