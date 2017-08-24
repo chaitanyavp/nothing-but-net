@@ -84,7 +84,7 @@ function scene:create( event )
 	crate.fill = {type="image", filename="ball.png"}
 	
 	-- add physics to the crate
-	physics.addBody( crate, { density=0.1, bounce=0.7, friction=0.5, radius=20} )
+	physics.addBody( crate, { density=0.1, bounce=0.8, friction=0.5, radius=20} )
 	crate.myName = "crate"
 	
 	-- create a grass object and add physics (with custom shape)
