@@ -19,7 +19,7 @@ local playBtn
 local function onPlayBtnRelease()
 	
 	-- go to level1.lua scene
-	composer.gotoScene( "level1", "fromRight", 500 )
+	composer.gotoScene( "scenes.levels.level1", "fromRight", 500 )
 	
 	return true	-- indicates successful touch
 end

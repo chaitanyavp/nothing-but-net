@@ -26,9 +26,9 @@ local function onPlayBtnRelease()
 	
 	-- go to level1.lua scene
 	--temp, change when level# passed
-	composer.removeScene("level1")
-	composer.removeScene("win")
-	composer.gotoScene( "level1", "fromRight", 500 )
+	composer.removeScene("scenes.levels.level1")
+	composer.removeScene("scenes.win")
+	composer.gotoScene( "scenes.levels.level1", "fromRight", 500 )
 	
 	return true	-- indicates successful touch
 end
@@ -69,31 +69,32 @@ function scene:create( event )
 	--Gold stars (shown by default)
 
 	local function gold1()
-	if (event.params.stars>=1) then
-	local gold_star1 = display.newImageRect( "images/gold_star.png", 60, 50 )
-	gold_star1.x, gold_star1.y = display.contentWidth *0.25, 50
-	sceneGroup:insert( gold_star1 )
-	end 
-end
+		if (event.params.stars>=1) then
+			local gold_star1 = display.newImageRect( "images/gold_star.png", 60, 50 )
+			gold_star1.x, gold_star1.y = display.contentWidth *0.25, 50
+			sceneGroup:insert( gold_star1 )
+		end 
+	end
 
 	timer.performWithDelay(1000,gold1)
 
 	local function gold2()
-	if (event.params.stars>=2) then
-	local gold_star2 = display.newImageRect( "images/gold_star.png", 60, 50 )
-	gold_star2.x, gold_star2.y = display.contentWidth *0.50, 50
-	sceneGroup:insert( gold_star2 )
+		if (event.params.stars>=2) then
+			local gold_star2 = display.newImageRect( "images/gold_star.png", 60, 50 )
+			gold_star2.x, gold_star2.y = display.contentWidth *0.50, 50
+			sceneGroup:insert( gold_star2 )
+		end
 	end
-end
+	
 	timer.performWithDelay(1500,gold2)
 
 	local function gold3()
-	if (event.params.stars>=3) then
-	local gold_star3 = display.newImageRect( "images/gold_star.png", 60, 50 )
-	gold_star3.x, gold_star3.y = display.contentWidth *0.75, 50
-	sceneGroup:insert( gold_star3 )
+		if (event.params.stars>=3) then
+			local gold_star3 = display.newImageRect( "images/gold_star.png", 60, 50 )
+			gold_star3.x, gold_star3.y = display.contentWidth *0.75, 50
+			sceneGroup:insert( gold_star3 )
+		end
 	end
-end
 	timer.performWithDelay(2100,gold3)
 
 	--score text
