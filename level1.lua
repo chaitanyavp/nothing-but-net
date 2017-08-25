@@ -35,10 +35,9 @@ function scene:create( event )
 	local spawnCount = 10
 
 	-- create a grey rectangle as the backdrop
-	local background = display.newImageRect("images/sky3.jpg", screenW, screenH )
-	background.anchorX = 0
-	background.anchorY = 0
-	background.id = "background"
+	local background = display.newImageRect( "images/sky3.jpg", display.actualContentWidth, display.actualContentHeight )
+	background.x = display.contentWidth *0.5
+	background.y = display.contentHeight *0.5
 
 	--counter for lines spawned
 	local spawnCounter = display.newText( tostring(spawnCount), screenW*0.80, screenH*0.1, system.nativefont,30 )
@@ -112,9 +111,9 @@ function scene:create( event )
 	crate.myName = "crate"
 	
 	-- create a grass object and add physics (with custom shape)
-	local grass = display.newImageRect( "images/ground.png", screenW, 82 )
+	local grass = display.newImageRect( "images/ground.png", screenW, 100 )
 	grass.anchorX = 0
-	grass.anchorY = 1
+	grass.anchorY = 0
 	grass.x, grass.y = 0, display.contentHeight
 
 	--create left/right borders and add physics
