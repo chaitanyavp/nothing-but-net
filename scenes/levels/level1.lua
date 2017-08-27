@@ -19,7 +19,7 @@ local screenW, screenH, halfW = display.contentWidth, display.contentHeight, dis
 --DECLARE STAR COUNT HERE:
 local threeStarCondition = 1
 local twoStarCondition = 2
-local oneStarCondition = 4
+local oneStarCondition = 3
 --Number of tries allowed
 local spawnTries = 10
 
@@ -155,16 +155,12 @@ function scene:create( event )
 			local starCount
 			if ((spawnTries-spawnCount) <= threeStarCondition) then
 				starCount = 3
-			end
-		    if ((spawnTries-spawnCount) == twoStarCondition) then
+		    elseif ((spawnTries-spawnCount) == twoStarCondition) then
 				starCount = 2
-			end
-			if ((spawnTries-spawnCount) ==oneStarCondition ) then 
+
+      elseif((spawnTries-spawnCount) >= oneStarCondition ) then 
 				starCount = 1
 			end
-			if ((spawnTries - spawnCount) > oneStarCondition) then
-				starCount = 0
-			end	 
 
 			local options = {
 				effect = "fromTop",
