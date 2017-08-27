@@ -21,8 +21,8 @@ function scene:create( event )
 				oneStarCondition = 3,
 				spawnTries = 10,
 				netX = 3*screenW/4,
-				netY = screenH/2,
-				currentLevel = 1
+				netY = screenH/3,
+				currentLevel = 2
 			}
 		}
 	composer.gotoScene( "scenes.levels.static_level", options)
