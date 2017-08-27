@@ -114,7 +114,7 @@ function scene:create( event )
 	-- create a grass object and add physics (with custom shape)
 	local grass = display.newImageRect( "images/ground.png", screenW, 82 )
 	grass.anchorX = 0
-	grass.anchorY = 1
+	grass.anchorY = 0
 	grass.x, grass.y = 0, display.contentHeight
 
 	--create left/right borders and add physics
