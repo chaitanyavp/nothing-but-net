@@ -28,7 +28,7 @@ local function onPlayBtnRelease()
 	--temp, change when level# passed
 	composer.removeScene("scenes.levels.level1")
 	composer.removeScene("scenes.win")
-	composer.gotoScene( "scenes.levels.level1", "fromRight", 500 )
+	composer.gotoScene( "scenes.levels.level"..events.params.nextLevel, "fromRight", 500 )
 	
 	return true	-- indicates successful touch
 end
