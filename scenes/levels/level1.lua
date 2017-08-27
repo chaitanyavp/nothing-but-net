@@ -19,7 +19,7 @@ local screenW, screenH, halfW = display.contentWidth, display.contentHeight, dis
 --DECLARE STAR COUNT HERE:
 local threeStarCondition = 1
 local twoStarCondition = 2
-local oneStarCondition = 4
+local oneStarCondition = 3
 --Number of tries allowed
 local spawnTries = 10
 
