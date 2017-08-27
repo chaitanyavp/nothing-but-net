@@ -150,12 +150,12 @@ function scene:create( event )
 	
 	-- create a target to hit
 	local target = display.newImage("images/net.png")
-	target.x = 3*screenW/4
-	target.y = screenH/2
+	target.x = netX
+	target.y = netY
 	physics.addBody(target, "static");
 	target.myName = "target"
 	
-	local targetHitbox = display.newRect(3*screenW/4, screenH/2-(target.contentHeight/2), 
+	local targetHitbox = display.newRect(netX, netY-(target.contentHeight/2), 
 		3*target.contentWidth/4, target.contentHeight/4)
 	targetHitbox:setFillColor(0,0,0,0)
 	physics.addBody(targetHitbox, "static");
