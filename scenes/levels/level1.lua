@@ -53,7 +53,7 @@ function scene:create( event )
 			}
 		}
 
-		composer.gotoScene( "win", options)
+		composer.gotoScene( "scenes.win", options)
 	end
 
 	-- add a touch listener to draw line.
@@ -156,16 +156,11 @@ function scene:create( event )
 			local starCount
 			if ((spawnTries-spawnCount) <= threeStarCondition) then
 				starCount = 3
-			end
-		    if ((spawnTries-spawnCount) == twoStarCondition) then
+		    elseif ((spawnTries-spawnCount) == twoStarCondition) then
 				starCount = 2
-			end
-			if ((spawnTries-spawnCount) >=oneStarCondition ) then 
+			elseif((spawnTries-spawnCount) >= oneStarCondition ) then 
 				starCount = 1
 			end
-			if ((spawnTries - spawnCount) >= 5) then
-				starCount = 0
-			end	 
 
 			local options = {
 				effect = "fromTop",
@@ -176,7 +171,7 @@ function scene:create( event )
 				}
 			}
 
-			composer.gotoScene( "win", options)
+			composer.gotoScene( "scenes.win", options)
 		end
 	end
 	targetHitbox.collision = onTargetCollision
