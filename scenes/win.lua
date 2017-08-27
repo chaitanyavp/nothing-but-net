@@ -21,20 +21,34 @@ local widget = require "widget"
 local playBtn
 local replayBtn
 --GET SCORE PASSED IN
--- 'onRelease' event listener for playBtn
-local function onPlayBtnRelease()
-	
-	-- go to level1.lua scene
-	--temp, change when level# passed
-	composer.removeScene("scenes.levels.level1")
-	composer.removeScene("scenes.win")
-	composer.gotoScene( "scenes.levels.level1", "fromRight", 500 )
-	
-	return true	-- indicates successful touch
-end
+
 
 function scene:create( event )
 	local sceneGroup = self.view
+
+	-- 'onRelease' event listener for playBtn
+	local function onReplayBtnRelease()
+		
+		-- go to level1.lua scene
+		--temp, change when level# passed
+		composer.removeScene("scenes.levels.level"..event.params.currentLevel)
+		composer.removeScene("scenes.levels.static_level")
+		composer.removeScene("scenes.win")
+		composer.gotoScene( "scenes.levels.level"..event.params.currentLevel,"fromRight", 500 )
+		
+		return true	-- indicates successful touch
+	end
+
+	local function onNextBtnRelease()
+		
+		-- go to level1.lua scene
+		--temp, change when level# passed
+		composer.removeScene("scenes.levels.level"..event.params.currentLevel)
+		composer.removeScene("scenes.win")
+		composer.gotoScene( "scenes.levels.level"..(1+event.params.currentLevel), "fromRight", 500 )
+		
+		return true	-- indicates successful touch
+	end
 
 	-- Called when the scene's view does not exist.
 	-- 
@@ -107,7 +121,7 @@ function scene:create( event )
 		default="images/button.png",
 		over="images/button-over.png",
 		width=154, height=40,
-		onRelease = onPlayBtnRelease	-- event listener function
+		onRelease = onNextBtnRelease	-- event listener function
 	}
 	playBtn.x = display.contentWidth*0.5
 	playBtn.y = display.contentHeight - 125
@@ -120,7 +134,7 @@ function scene:create( event )
 		default="images/button.png",
 		over="images/button-over.png",
 		width=154, height=40,
-		onRelease = onPlayBtnRelease	-- event listener function
+		onRelease = onReplayBtnRelease	-- event listener function
 	}
 	replayBtn.x = display.contentWidth*0.5
 	replayBtn.y = display.contentHeight - 175
