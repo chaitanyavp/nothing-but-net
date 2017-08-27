@@ -119,9 +119,11 @@ function scene:create( event )
 	--create left/right borders and add physics
 
 	local leftBorder = display.newRect(0,screenH/2,1,screenH*2)
+	leftBorder:setFillColor(0,0,0,0)
 	physics.addBody(leftBorder, "static", {bounce=0.2,friction=0.3})
 
 	local rightBorder = display.newRect(screenW,screenH/2,1,screenH*2)
+	rightBorder:setFillColor(0,0,0,0)
 	physics.addBody(rightBorder, "static", {bounce=0.2,friction=0.3})
 	
 	-- define a shape that's slightly shorter than image bounds (set draw mode to "hybrid" or "debug" to see)
