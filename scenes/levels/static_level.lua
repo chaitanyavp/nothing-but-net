@@ -26,6 +26,8 @@ local spawnTries
 local netX
 local netY
 
+local level
+
 function scene:create( event )
 
 	-- Called when the scene's view does not exist.
@@ -40,6 +42,8 @@ function scene:create( event )
 	spawnTries = event.params.spawnTries
 	netX = event.params.netX
 	netY = event.params.netY
+	level = event.params.currentLevel
+	print("curr level is: "..level)
 
 
 	local sceneGroup = self.view
@@ -61,7 +65,8 @@ function scene:create( event )
 			params = {
 				stars = 0,
 				score = 0,
-				win = false
+				win = false,
+				currentLevel = level
 			}
 		}
 
@@ -181,7 +186,8 @@ function scene:create( event )
 				params = {
 					stars = starCount,
 					score = spawnCount,
-					win = true
+					win = true,
+					currentLevel = level
 				}
 			}
 
