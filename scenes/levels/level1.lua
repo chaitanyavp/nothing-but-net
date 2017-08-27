@@ -35,10 +35,9 @@ function scene:create( event )
 	local spawnCount = 10
 
 	-- create a grey rectangle as the backdrop
-	local background = display.newImageRect("images/sky3.jpg", screenW, screenH )
-	background.anchorX = 0
-	background.anchorY = 0
-	background.id = "background"
+	local background = display.newImageRect( "images/sky3.jpg", display.actualContentWidth, display.actualContentHeight )
+	background.x = display.contentWidth *0.5
+	background.y = display.contentHeight *0.5
 
 	--counter for lines spawned
 	local spawnCounter = display.newText( tostring(spawnCount), screenW*0.80, screenH*0.1, system.nativefont,30 )
@@ -158,7 +157,8 @@ function scene:create( event )
 				starCount = 3
 		    elseif ((spawnTries-spawnCount) == twoStarCondition) then
 				starCount = 2
-			elseif((spawnTries-spawnCount) >= oneStarCondition ) then 
+
+      elseif((spawnTries-spawnCount) >= oneStarCondition ) then 
 				starCount = 1
 			end
 
