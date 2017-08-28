@@ -28,6 +28,8 @@ local netY
 
 local level
 
+local crate
+
 function scene:create( event )
 
 	-- Called when the scene's view does not exist.
@@ -95,6 +97,21 @@ function scene:create( event )
 		end
 	end
 
+		--restart level button
+	local function restartLevel()
+		composer.removeScene("scenes.levels.level"..level)
+		composer.removeScene("scenes.levels.static_level")
+		drawing:removeSelf()
+		crate:removeSelf()
+		composer.gotoScene( "scenes.levels.level"..level,"fade", 500 )
+		
+		return true	-- indicates successful touch
+	end
+	local restartButton = display.newImageRect("images/restart_game.png",20,20)
+	restartButton.x = screenW*0.1
+	restartButton.y = screenH*0.1
+	restartButton:addEventListener("touch",restartLevel)
+
 	local function onBackgroundTouch( event )
 	    if ( event.phase == "began" ) then
 	    	drawX = event.x
@@ -119,7 +136,7 @@ function scene:create( event )
 
 	
 	-- make a crate (off-screen), position it, and rotate slightly
-	local crate = display.newCircle(90, 90, 20)
+    crate = display.newCircle(90, 90, 20)
 	crate.rotation = 10
 
 	crate.fill = {type="image", filename="images/ball.png"}
@@ -199,6 +216,7 @@ function scene:create( event )
 
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
+	sceneGroup:insert(restartButton)
 	sceneGroup:insert( spawnCounter )
 	sceneGroup:insert( grass)
 	sceneGroup:insert( crate )
