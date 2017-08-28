@@ -56,6 +56,10 @@ function scene:create( event )
 	background.anchorY = 0
 	background.id = "background"
 
+	--ball rest rectangle
+	local rest = display.newRect(90,115,50,10)
+	physics.addBody(rest,"static")
+
 	--counter for lines spawned
 	local spawnCounter = display.newText( tostring(spawnCount), screenW*0.80, screenH*0.1, system.nativefont,30 )
 
@@ -95,10 +99,16 @@ function scene:create( event )
 		end
 	end
 
+	local first = 0
+
 	local function onBackgroundTouch( event )
 	    if ( event.phase == "began" ) then
 	    	drawX = event.x
 	    	drawY = event.y
+	    	if first == 0 then
+	    	rest:removeSelf()
+	    	first = 1
+	    end
 	    elseif ( event.phase == "moved" ) then
 	    	local rect = display.newRect(event.x,event.y,8,8)
 	    	rect:setFillColor(0)
@@ -125,7 +135,7 @@ function scene:create( event )
 	crate.fill = {type="image", filename="images/ball.png"}
 	
 	-- add physics to the crate
-	timer.performWithDelay(1500,physics.addBody( crate, { density=0.1, bounce=0.8, friction=0.5, radius=20} ))
+	physics.addBody( crate, { density=0.1, bounce=0.8, friction=0.5, radius=20} )
 	crate.myName = "crate"
 	
 	-- create a grass object and add physics (with custom shape)
@@ -208,6 +218,7 @@ function scene:create( event )
 
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
+	sceneGroup:insert(rest)
 	sceneGroup:insert(restartButton)
 	sceneGroup:insert( spawnCounter )
 	sceneGroup:insert( grass)
