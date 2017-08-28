@@ -14,7 +14,7 @@ local screenW, screenH, halfW = display.contentWidth, display.contentHeight, dis
 
 function scene:create( event )
 	local options = {
-			effect = "fromRight",
+			effect = "fade",
 			params = {
 				threeStarCondition = 1,
 				twoStarCondition = 2,
