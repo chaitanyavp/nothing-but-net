@@ -44,6 +44,7 @@ function scene:create( event )
 		-- go to level1.lua scene
 		--temp, change when level# passed
 		composer.removeScene("scenes.levels.level"..event.params.currentLevel)
+		composer.removeScene("scenes.levels.static_level")
 		composer.removeScene("scenes.win")
 		composer.gotoScene( "scenes.levels.level"..(1+event.params.currentLevel), "fromRight", 500 )
 		
