@@ -20,6 +20,7 @@ local widget = require "widget"
 -- forward declarations and other locals
 local playBtn
 local replayBtn
+local menuBtn
 --GET SCORE PASSED IN
 
 
@@ -47,6 +48,17 @@ function scene:create( event )
 		composer.removeScene("scenes.levels.static_level")
 		composer.removeScene("scenes.win")
 		composer.gotoScene( "scenes.levels.level"..(1+event.params.currentLevel), "fromRight", 500 )
+		
+		return true	-- indicates successful touch
+	end
+
+	local function onMenuBtnRelease()
+		
+		-- go to menu.lua scene
+		composer.removeScene("scenes.levels.level"..event.params.currentLevel)
+		composer.removeScene("scenes.levels.static_level")
+		composer.removeScene("scenes.win")
+		composer.gotoScene( "scenes.menu", "fromLeft", 500 )
 		
 		return true	-- indicates successful touch
 	end
@@ -125,7 +137,7 @@ function scene:create( event )
 		onRelease = onNextBtnRelease	-- event listener function
 	}
 	playBtn.x = display.contentWidth*0.5
-	playBtn.y = display.contentHeight - 125
+	playBtn.y = display.contentHeight - 175
 
 
 	-- create a widget button (which will loads level1.lua on release)
@@ -138,16 +150,30 @@ function scene:create( event )
 		onRelease = onReplayBtnRelease	-- event listener function
 	}
 	replayBtn.x = display.contentWidth*0.5
-	replayBtn.y = display.contentHeight - 175
+	replayBtn.y = display.contentHeight - 125
+
+	-- create a widget button (which will loads level1.lua on release)
+	menuBtn = widget.newButton{
+		label="Main Menu",
+		labelColor = { default={255}, over={128} },
+		default="images/button.png",
+		over="images/button-over.png",
+		width=154, height=40,
+		onRelease = onMenuBtnRelease	-- event listener function
+	}
+	menuBtn.x = display.contentWidth*0.5
+	menuBtn.y = display.contentHeight - 75
 
 	if event.params.win == false then
 		playBtn.isVisible = false
 		replayBtn.y = display.contentHeight - 150
+		menuBtn.y = display.contentHeight - 100
 	end
 	
 	-- all display objects must be inserted into group
 	sceneGroup:insert( playBtn )
 	sceneGroup:insert( replayBtn )
+	sceneGroup:insert( menuBtn )
 	sceneGroup:insert( current_score )
 
 end
