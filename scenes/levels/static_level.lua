@@ -9,7 +9,7 @@ local scene = composer.newScene()
 
 -- include Corona's "physics" library
 local physics = require "physics"
-physics.start();physics.pause()
+physics.start(); physics.pause()
 
 --------------------------------------------	
 
@@ -119,13 +119,13 @@ function scene:create( event )
 
 	
 	-- make a crate (off-screen), position it, and rotate slightly
-    local crate = display.newCircle(90, 90, 20)
+	local crate = display.newCircle(90, 90, 20)
 	crate.rotation = 10
 
 	crate.fill = {type="image", filename="images/ball.png"}
 	
 	-- add physics to the crate
-	timer.performWithDelay(1500,physics.addBody( crate, { density=0.1, bounce=0.8, friction=0.5, radius=20} ))
+	physics.addBody( crate, { density=0.1, bounce=0.8, friction=0.5, radius=20} )
 	crate.myName = "crate"
 	
 	-- create a grass object and add physics (with custom shape)
@@ -160,6 +160,14 @@ function scene:create( event )
 	targetHitbox:setFillColor(0,0,0,0)
 	physics.addBody(targetHitbox, "static");
 	targetHitbox.myName = "targetHitbox"
+
+	local function animationHeartBeat(event)
+		local vx,vy = crate:getLinearVelocity()
+		if (math.abs(vy)<1) then
+		 crate:setLinearVelocity( 0, -100 )
+		end
+	end
+	timer.performWithDelay( 1000, animationHeartBeat)
 	
 	local function onTargetCollision (self, event)
 		if ( event.phase == "ended" ) 
@@ -189,26 +197,8 @@ function scene:create( event )
 	targetHitbox.collision = onTargetCollision
 	targetHitbox:addEventListener("collision")
 
-		--restart level button
-	local function restartLevel(event)
-		if (event.phase == "ended") then
-		composer.removeScene("scenes.levels.level"..level)
-		drawing:removeSelf()
-		crate:removeSelf()
-		composer.removeScene("scenes.levels.static_level")
-		composer.gotoScene( "scenes.levels.level"..level )
-	end
-		
-		return true	-- indicates successful touch
-	end
-	local restartButton = display.newImageRect("images/restart_game.png",20,20)
-	restartButton.x = screenW*0.1
-	restartButton.y = screenH*0.1
-	restartButton:addEventListener("touch",restartLevel)
-
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
-	sceneGroup:insert(restartButton)
 	sceneGroup:insert( spawnCounter )
 	sceneGroup:insert( grass)
 	sceneGroup:insert( crate )
@@ -227,7 +217,7 @@ function scene:show( event )
 		-- 
 		-- INSERT code here to make the scene come alive
 		-- e.g. start timers, begin animation, play audio, etc.
-		timer.performWithDelay(3000,physics.start())
+		physics.start()
 	end
 end
 
