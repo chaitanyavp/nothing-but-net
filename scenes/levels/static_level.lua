@@ -205,12 +205,17 @@ function scene:create( event )
 		composer.removeScene("scenes.levels.level"..level)
 		drawing:removeSelf()
 		crate:removeSelf()
+		if first == 0 then 
+			rest:removeSelf()
+			first = -1
+		end
 		composer.removeScene("scenes.levels.static_level")
 		composer.gotoScene( "scenes.levels.level"..level )
-	end
+		end
 		
 		return true	-- indicates successful touch
 	end
+
 	local restartButton = display.newImageRect("images/restart_game.png",20,20)
 	restartButton.x = screenW*0.1
 	restartButton.y = screenH*0.1
@@ -267,6 +272,11 @@ function scene:destroy( event )
 	-- INSERT code here to cleanup the scene
 	-- e.g. remove display objects, remove touch listeners, save state, etc.
 	local sceneGroup = nil
+
+	if rest then
+		rest:removeSelf()
+		rest = nil
+	end
 	
 	package.loaded[physics] = nil
 	physics = nil
