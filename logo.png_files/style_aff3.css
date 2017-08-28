@@ -1,0 +1,297 @@
+body #logo_index a IMG{
+    width: 0px;
+    height: 0px;
+    padding-left: 230px;
+    padding-bottom: 72px;
+    background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff3/lmk_logo.png');
+    background-repeat:no-repeat;
+    margin-top:10px;
+    margin-left:10px;
+}
+
+body.page-body-home #logo_index a IMG{
+    margin-top:9px;
+    margin-left:7px;
+}
+body.new_domain_logo #logo img{
+   padding-left: 176px;
+}
+body #logo img{
+    height: 0px;
+    width: 0px;
+    background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff3/lmk_logo.png');
+    background-repeat:no-repeat;
+    padding-left: 212px;
+    padding-bottom: 40px;
+    background-repeat: no-repeat;
+    margin-top: 10px;
+}
+body.new_domain_logo #logo img,
+body.new_domain_logo #logo_index .domain_logo{
+	background-size:cover;
+	height:initial !important;
+}
+body.new_domain_logo.page-country-US #logo img,
+body.new_domain_logo.page-country-US #logo_index .domain_logo{
+	background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff2/domain_logos/logo_mix_medium_us.png');	
+}
+body.new_domain_logo.page-country-AU #logo img,
+body.new_domain_logo.page-country-AU #logo_index .domain_logo{
+	background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff2/domain_logos/logo_mix_medium_au.png');	
+}
+body.new_domain_logo.page-country-BR #logo img,
+body.new_domain_logo.page-country-BR #logo_index .domain_logo{
+	background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff2/domain_logos/logo_mix_medium_br.png');	
+}
+body.new_domain_logo.page-country-CA #logo img,
+body.new_domain_logo.page-country-CA #logo_index .domain_logo{
+	background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff2/domain_logos/logo_mix_medium_ca.png');	
+}
+body.new_domain_logo.page-country-DE #logo img,
+body.new_domain_logo.page-country-DE #logo_index .domain_logo{
+	background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff2/domain_logos/logo_mix_medium_de.png');	
+}
+body.new_domain_logo.page-country-ES #logo img,
+body.new_domain_logo.page-country-ES #logo_index .domain_logo{
+	background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff2/domain_logos/logo_mix_medium_es.png');	
+}
+body.new_domain_logo.page-country-FR #logo img,
+body.new_domain_logo.page-country-FR #logo_index .domain_logo{
+	background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff2/domain_logos/logo_mix_medium_fr.png');	
+}
+body.new_domain_logo.page-country-IN #logo img,
+body.new_domain_logo.page-country-IN #logo_index .domain_logo{
+	background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff2/domain_logos/logo_mix_medium_in.png');	
+}
+body.new_domain_logo.page-country-IT #logo img,
+body.new_domain_logo.page-country-IT #logo_index .domain_logo{
+	background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff2/domain_logos/logo_mix_medium_it.png');	
+}
+body.new_domain_logo.page-country-SE #logo img,
+body.new_domain_logo.page-country-SE #logo_index .domain_logo{
+	background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff2/domain_logos/logo_mix_medium_se.png');	
+}
+body.new_domain_logo.page-country-UK #logo img,
+body.new_domain_logo.page-country-UK #logo_index .domain_logo,
+body.new_domain_logo.page-country-GB #logo img,
+body.new_domain_logo.page-country-GB #logo_index .domain_logo{
+	background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff2/domain_logos/logo_mix_medium_uk.png');	
+}
+body.new_domain_logo.page-country-EU #logo img,
+body.new_domain_logo.page-country-EU #logo_index .domain_logo{
+	background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff2/domain_logos/logo_mix_medium_eu.png');	
+}
+body.new_domain_logo.page-country-NL #logo img,
+body.new_domain_logo.page-country-NL #logo_index .domain_logo{
+	background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff2/domain_logos/logo_mix_medium_nl.png');	
+}
+body.new_domain_logo.page-country-MX #logo img,
+body.new_domain_logo.page-country-MX #logo_index .domain_logo{
+	background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff2/domain_logos/logo_mix_medium_mx.png');	
+}
+body.new_domain_logo .enterprise_logo img{
+    max-width: 165px;
+}
+#gc_lp1_logo{
+    height: 37px;
+    width: 212px;
+    background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff3/lmk_logo.png');
+}
+#gc_lp1_logo_container {
+    padding-top: 14px;
+    padding-left: 53px;
+	width: 215px;
+}
+
+body #products_top_menu{
+    width:960px;
+}
+
+.popup_index2 .homepage_logo {
+	background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff2/logo_mix_medium.png');
+	background-repeat: no-repeat;
+	margin: 0px auto;
+	margin-top: -25px;
+	margin-bottom: 3px;
+	width: 208px;
+	height: 60px;
+}
+
+/**Reorder BC Page**/
+.reorderBcContainer .rightColumn{
+	width: 513px;
+}
+.reorderBcContainer .rightColumn img{
+	width: 513px;
+}
+body[class*="page-body-business-cards-reorder"] .body_page{
+    background: none !important;    
+}
+.thankYouBox.bc_feedback_lightbox img.logo {
+    background-image: url("https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff2/logo_mix_small.png");
+    background-repeat: no-repeat;
+    height: 0;
+    padding-bottom: 44px;
+    padding-left: 152px;
+    width: 0;
+}
+
+/*FB Christmas-Gift Page*/
+#fbContent .designContainer{
+	margin-right: 9px;
+}
+#fbTop .leftContent{
+	width: 333px;
+}
+.newsletter .right_container{
+	width:270px;
+}
+.page-body-3--home #top_nav_menu ul.first_level {
+    margin-left:-8px !important;
+}
+body[class*='page-body-showcase'] .radio_mic {
+	right:280px;
+}
+.product_lp  .bc-lp-grey-top-container{
+	padding-top:0px !important;
+}
+
+/*hide websites terms and conditions line from PN and LM*/
+.jqmNotice .websites_terms{
+    display:none;
+}
+
+/* WBSITES */
+body .website_design_page .orangeButton {
+    margin-left: 5px;
+}
+.domain_not_available input.disabled, .websites_domain_results input.disabled, .websites_domain_results input.disabled_btn{
+    width: 18% !important;
+    min-width: 92px;
+    padding: 6px 2px !important;
+    font-family: sans-serif !important;
+    font-weight: normal !important;
+    border-radius: 60px !important;
+}
+.websites_domain_results input.disabled, .websites_domain_results input.disabled_btn {
+    font-size:11px;
+}
+.websites_domain_results input.fls-bluebutton{
+    min-width: 92px;
+}
+body.body-theme-flat.new_domain_logo #logo_index a IMG{
+   padding-left: 176px;
+}
+body.body-theme-flat #logo_index a IMG{
+    height: 0px;
+    width: 0px;
+    background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff3/lmk_logo.png');
+    background-repeat: no-repeat;
+    padding-left: 212px;
+    padding-bottom: 40px;
+    background-repeat: no-repeat;
+    margin-top:10px;
+}
+.body_discount_lp #special_offer_image{
+    display:none;
+}
+.newsletter_lp{
+    margin-top: 47px;
+}
+
+/* bcwebsite popup */
+body.page-lang-es .websites_domain_search_form #websites_domain_search_input {
+    width: 200px !important;
+}
+body.page-lang-fr .websites_domain_search_form #websites_domain_search_input {
+    width:205px !important;
+}
+body.page-lang-es.mobile_orientation_portrait .websites_domain_search_form #websites_domain_search_input,
+body.page-lang-fr.mobile_orientation_portrait .websites_domain_search_form #websites_domain_search_input {
+    width:125px !important;
+}
+body.mobile_orientation_portrait.body-theme-flat .websites_domain_search_form input.websites_domain_search_button.fls-bluebutton{
+	width:25% !important;
+}
+body.page-body-index1 #top_sidebar_logo IMG{
+	content: url("https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff2/logo_mix_small.png");
+}
+body[class*='new_domain_logo'] #logo img{
+	height:0px;
+}
+body.page-body-domain-name-search .websites_domain_search_form #websites_domain_search_input,
+body.page-body-saved-domain-463 .websites_domain_search_form #websites_domain_search_input,
+body.page-body-business-email-hosting-services .websites_domain_search_form #websites_domain_search_input
+{
+   width: 370px !important
+}
+.page-body-saved-domain-463 .container .content .orangeButton{
+	width:95% !important;
+}
+.page-body-saved-domain-463.page-lang-fr .container .content .buttons{
+	width: 257px;
+}
+.page-body-domain-name-search.mobile_view .website_design_page .websites_domain_search_form #websites_domain_search_input {
+    width: 255px !important;
+}
+.page-body-domain-name-search.mobile_view .website_design_page .orangeButton{
+	margin:0px auto !important;
+	margin-top:10px !important;
+}
+.page-body-business-cards-step2.page-lang-de .bcworkflow_lightbox .bcworkflow_step .bcworkflow_step_center .bcworkflow_step_center_content a.fls-orangebutton,
+.page-body-business-cards-step2.page-lang-fr .bcworkflow_lightbox .bcworkflow_step .bcworkflow_step_center .bcworkflow_step_center_content a.fls-orangebutton,
+.page-body-business-cards-step2.page-lang-nl .bcworkflow_lightbox .bcworkflow_step .bcworkflow_step_center .bcworkflow_step_center_content a.fls-orangebutton{
+	width:115px !important;
+}
+.page-body-business-cards-step2.page-lang-es .bcworkflow_lightbox .bcworkflow_step .bcworkflow_step_center .bcworkflow_step_center_content a.fls-orangebutton,
+.page-body-business-cards-step2.page-lang-pt-pt .bcworkflow_lightbox .bcworkflow_step .bcworkflow_step_center .bcworkflow_step_center_content a.fls-orangebutton{
+	width:125px !important;
+}
+.page-body-index3.page-lang-nl #edit-submit .font20px,
+.page-body-index3.page-lang-de #edit-submit .font20px,
+.page-body-index3.page-lang-fr #edit-submit .font20px{
+	font-size:19px;
+}
+.page-body-index3.page-lang-pt-pt #edit-submit .font20px{
+	font-size:18px;
+}
+.page-body-index3.page-lang-tr #edit-submit .font20px{
+	font-size:17px;
+}
+#returnHome #websites_domain_search_input{
+    width: 331px !important;
+}
+#returnHome .row.bc .blue_bg .fls-orange-button{
+    border-radius:60px !important;
+    background: #f8981d none repeat scroll 0 0 !important;
+    border: medium none !important;  
+    box-shadow: none !important;
+    box-sizing: border-box !important;
+    color: #fff !important;
+}
+#returnHome .row.bc .blue_bg .fls-orange-button:hover,
+#returnHome #newestPolos a.fls-orange-button:hover{
+    background: #f8A82d !important;
+}
+#returnHome #newestPolos a.fls-orange-button{
+	background: #f8981d none repeat scroll 0 0 !important;
+	color: #fff !important;
+}
+
+
+body.body-theme-flat.body_weebly_app #logo_index a IMG,
+body.body-theme-flat.body_weebly_app #logo img{
+    padding-left: 265px;
+    background-image: url('https://freelogo-assets.s3.amazonaws.com/sites/all/themes/freelogoservices/images/aff3/lmk_weebly_logo.png');
+}
+#products_thankyou .logo_download_section .filehelp_link a{
+    background: #FFF !important;
+    color: #eb772a !important;
+    border: 1px solid #eb772a !important;
+}
+body.page-body-google-apps .website_design_page .orangeButton{
+    font-size:27px !important;
+}
+.page-lang-nl #bc_options.bc_options_hot .banner p{
+    font-size:11px !important;
+}
