@@ -14,12 +14,21 @@ local widget = require "widget"
 
 -- forward declarations and other locals
 local playBtn
+local levelSelect
 
 -- 'onRelease' event listener for playBtn
 local function onPlayBtnRelease()
 	
 	-- go to level1.lua scene
 	composer.gotoScene( "scenes.levels.level1", "fromRight", 500 )
+	
+	return true	-- indicates successful touch
+end
+
+local function onSelectBtnRelease()
+	
+	-- go to level1.lua scene
+	composer.gotoScene( "scenes.select", "fromTop", 500 )
 	
 	return true	-- indicates successful touch
 end
@@ -62,7 +71,7 @@ function scene:create( event )
 		default="images/button.png",
 		over="images/button-over.png",
 		width=154, height=20,
-		onRelease = levelSelectFunction	-- event listener function
+		onRelease = onSelectBtnRelease	-- event listener function
 	}
 	levelSelect.x = display.contentWidth*0.5
 	levelSelect.y = display.contentHeight - 190
