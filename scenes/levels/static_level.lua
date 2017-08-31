@@ -50,17 +50,21 @@ function scene:create( event )
 	local spawnCount = 10
 
 	-- create a grey rectangle as the backdrop
-	local background = display.newImageRect("images/sky3.jpg", screenW, screenH )
+	local background = display.newImageRect("images/sky3.jpg", screenW, screenH*1.5 )
 	background.anchorX = 0
-	background.anchorY = 0
+	background.anchorY = 0.1
 	background.id = "background"
 
 	--ball rest rectangle
-	local rest = display.newRect(90,115,50,10)
+	local rest = display.newImageRect("images/rest-texture.jpg",40,10)
+	rest.x,rest.y = screenW*0.283,screenH*0.24
 	physics.addBody(rest,"static")
 
 	--counter for lines spawned
-	local spawnCounter = display.newText( tostring(spawnCount), screenW*0.80, screenH*0.1, system.nativefont,30 )
+	local linesLeftString = display.newText("Lines Left: ", screenW*0.60, 0, system.nativefont,25 )
+
+	local spawnCounter = display.newText(tostring(spawnCount), screenW*0.85, 0, system.nativefont,30 )
+	spawnCounter:setTextColor(1,0.9,0)
 
 	local function lose()
 		local options = {
@@ -91,6 +95,14 @@ function scene:create( event )
 				event.other:setLinearVelocity(xVel, 1.4*yVel)
 			    spawnCount = spawnCount - 1
 		    	spawnCounter.text = spawnCount
+		    	if (spawnCount < spawnTries-threeStarCondition) then
+		    		spawnCounter:setTextColor(0.8,0.8,0.8)
+		    	end
+		    	if (spawnCount < spawnTries-twoStarCondition) then
+		    		spawnCounter:setTextColor(0.9,0.4,0.1)
+		    	end
+
+
 				drawing:removeSelf()
 				drawing = display.newGroup()
 				sceneGroup:insert(drawing)
@@ -130,6 +142,7 @@ function scene:create( event )
 	-- make a crate (off-screen), position it, and rotate slightly
     local crate = display.newCircle(90, 90, 20)
 	crate.rotation = 10
+	crate:setFillColor(white)
 
 	crate.fill = {type="image", filename="images/ball.png"}
 	
@@ -138,7 +151,7 @@ function scene:create( event )
 	crate.myName = "crate"
 	
 	-- create a grass object and add physics (with custom shape)
-	local grass = display.newImageRect( "images/ground.png", screenW, 82 )
+	local grass = display.newImageRect( "images/rest-texture.jpg", screenW, 82 )
 	grass.anchorX = 0
 	grass.anchorY = 0
 	grass.x, grass.y = 0, display.contentHeight
@@ -215,13 +228,15 @@ function scene:create( event )
 		return true	-- indicates successful touch
 	end
 
+	--restart level button
 	local restartButton = display.newImageRect("images/restart_game.png",20,20)
 	restartButton.x = screenW*0.1
-	restartButton.y = screenH*0.1
+	restartButton.y = 0
 	restartButton:addEventListener("touch",restartLevel)
 
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
+	sceneGroup:insert(linesLeftString)
 	sceneGroup:insert( rest )
 	sceneGroup:insert( restartButton )
 	sceneGroup:insert( spawnCounter )
