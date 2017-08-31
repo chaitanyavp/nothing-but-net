@@ -70,21 +70,20 @@ function scene:create( event )
 
 	-- display a background image
 	-- create a grey rectangle as the backdrop
-	local background = display.newImageRect( "images/background.jpg", display.actualContentWidth, display.actualContentHeight )
+	local background = display.newImageRect( "images/background.png", display.actualContentWidth, display.actualContentHeight )
 	background.x = display.contentWidth *0.5
 	background.y = display.contentHeight *0.5
-
 	--HOW THIS WORKS: black stars are rendered under gold, hide gold based on score passed in as parameter
 
 	--Black stars (hide gold stars to see)
 
-	local black_star1 = display.newImageRect( "images/black_star.png", 45, 50 )
+	local black_star1 = display.newImageRect( "images/black_star.png", 40, 45 )
 	black_star1.x, black_star1.y = display.contentWidth *0.25, 50
 
-	local black_star2 = display.newImageRect( "images/black_star.png", 45, 50 )
+	local black_star2 = display.newImageRect( "images/black_star.png", 40, 45 )
 	black_star2.x, black_star2.y = display.contentWidth *0.50, 50
 
-	local black_star3 = display.newImageRect( "images/black_star.png", 45, 50 )
+	local black_star3 = display.newImageRect( "images/black_star.png", 40, 45 )
 	black_star3.x, black_star3.y = display.contentWidth *0.75, 50
 
 	--inserting thus far to scene
@@ -97,7 +96,7 @@ function scene:create( event )
 
 	local function gold1()
 		if (event.params.stars>=1) then
-			local gold_star1 = display.newImageRect( "images/gold_star.png", 60, 50 )
+			local gold_star1 = display.newImageRect( "images/bronze_star.png", 60, 50 )
 			gold_star1.x, gold_star1.y = display.contentWidth *0.25, 50
 			sceneGroup:insert( gold_star1 )
 		end 
@@ -107,7 +106,7 @@ function scene:create( event )
 
 	local function gold2()
 		if (event.params.stars>=2) then
-			local gold_star2 = display.newImageRect( "images/gold_star.png", 60, 50 )
+			local gold_star2 = display.newImageRect( "images/silver_star.png", 60, 50 )
 			gold_star2.x, gold_star2.y = display.contentWidth *0.50, 50
 			sceneGroup:insert( gold_star2 )
 		end
