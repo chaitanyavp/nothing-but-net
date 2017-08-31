@@ -35,7 +35,7 @@ function scene:create( event )
 		composer.removeScene("scenes.levels.level"..event.params.currentLevel)
 		composer.removeScene("scenes.levels.static_level")
 		composer.removeScene("scenes.win")
-		composer.gotoScene( "scenes.levels.level"..event.params.currentLevel,"fromRight", 500 )
+		composer.gotoScene( "scenes.levels.level"..event.params.currentLevel,"fromBottom", 300 )
 		
 		return true	-- indicates successful touch
 	end
