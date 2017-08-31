@@ -22,7 +22,8 @@ function scene:create( event )
 				spawnTries = 10,
 				netX = 3*screenW/4,
 				netY = screenH/3,
-				currentLevel = 2
+				currentLevel = 2,
+				obstacles = {{screenW/2,screenH/2,25,75}}
 			}
 		}
 	composer.gotoScene( "scenes.levels.static_level", options)

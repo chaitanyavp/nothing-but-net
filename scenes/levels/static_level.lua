@@ -43,8 +43,7 @@ function scene:create( event )
 	netX = event.params.netX
 	netY = event.params.netY
 	level = event.params.currentLevel
-	print("curr level is: "..level)
-
+	obstacles = event.params.obstacles
 
 	local sceneGroup = self.view
 
@@ -212,6 +211,7 @@ function scene:create( event )
 	targetHitbox.collision = onTargetCollision
 	targetHitbox:addEventListener("collision")
 
+	--restart level button
 	local function restartLevel(event)
 		if (event.phase == "ended") then
 		composer.removeScene("scenes.levels.level"..level)
@@ -237,12 +237,21 @@ function scene:create( event )
 	-- all display objects must be inserted into group
 	sceneGroup:insert( background )
 	sceneGroup:insert(linesLeftString)
-	sceneGroup:insert(rest)
-	sceneGroup:insert(restartButton)
+	sceneGroup:insert( rest )
+	sceneGroup:insert( restartButton )
 	sceneGroup:insert( spawnCounter )
 	sceneGroup:insert( grass)
 	sceneGroup:insert( crate )
 	sceneGroup:insert( target )
+
+		--add obstacles last
+	for i, obstacle in ipairs(obstacles) do
+		obstacleRect = display.newRect(obstacle[1],obstacle[2],obstacle[3],obstacle[4])
+		obstacleRect:setFillColor(25,0,25,255)
+		physics.addBody(obstacleRect, "static", {bounce=0.2,friction=0.3})
+		sceneGroup:insert( obstacleRect )
+	end
+
 end
 
 
