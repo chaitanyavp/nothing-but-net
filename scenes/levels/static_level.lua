@@ -123,7 +123,7 @@ function scene:create( event )
 	    elseif ( event.phase == "moved" ) then
 	    	local rect = display.newRect(event.x,event.y,8,8)
 	    	rect:setFillColor(0)
-	    	physics.addBody( rect, "static")
+	    	physics.addBody( rect, "static", {bounce=0.9})
 	    	local line = display.newLine(drawX,drawY,event.x,event.y)
 	    	line.strokeWidth = 10
 	    	line:setStrokeColor(0)
