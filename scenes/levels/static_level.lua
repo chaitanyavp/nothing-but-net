@@ -147,7 +147,7 @@ function scene:create( event )
 	crate.fill = {type="image", filename="images/ball.png"}
 	
 	-- add physics to the crate
-	physics.addBody( crate, { density=0.1, bounce=0.8, friction=0.5, radius=20} )
+	physics.addBody( crate, { density=0.1, bounce=0.85, friction=0.5, radius=20} )
 	crate.myName = "crate"
 	
 	-- create a grass object and add physics (with custom shape)
@@ -160,15 +160,15 @@ function scene:create( event )
 
 	local leftBorder = display.newRect(0,screenH/2,1,screenH*2)
 	leftBorder:setFillColor(0,0,0,0)
-	physics.addBody(leftBorder, "static", {bounce=0.2,friction=0.3})
+	physics.addBody(leftBorder, "static", {bounce=0.9,friction=0.3})
 
 	local rightBorder = display.newRect(screenW,screenH/2,1,screenH*2)
 	rightBorder:setFillColor(0,0,0,0)
-	physics.addBody(rightBorder, "static", {bounce=0.2,friction=0.3})
+	physics.addBody(rightBorder, "static", {bounce=0.9,friction=0.3})
 	
 	-- define a shape that's slightly shorter than image bounds (set draw mode to "hybrid" or "debug" to see)
 	local grassShape = { -halfW,-34, halfW,-34, halfW,34, -halfW,34 }
-	physics.addBody( grass, "static", { friction=0.8, shape=grassShape } )
+	physics.addBody( grass, "static", { bounce=1,friction=0.8, shape=grassShape } )
 	
 	-- create a target to hit
 	local target = display.newImage("images/net.png")
