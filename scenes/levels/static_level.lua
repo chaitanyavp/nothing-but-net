@@ -151,7 +151,7 @@ function scene:create( event )
 	crate.myName = "crate"
 	
 	-- create a grass object and add physics (with custom shape)
-	local grass = display.newImageRect( "images/ground.png", screenW, 82 )
+	local grass = display.newImageRect( "images/rest-texture.jpg", screenW, 82 )
 	grass.anchorX = 0
 	grass.anchorY = 0
 	grass.x, grass.y = 0, display.contentHeight
