@@ -28,7 +28,7 @@ end
 local function onSelectBtnRelease()
 	
 	-- go to level1.lua scene
-	composer.gotoScene( "scenes.select", "fromTop", 500 )
+	composer.gotoScene( "scenes.select", "fade", 500 )
 	
 	return true	-- indicates successful touch
 end

@@ -16,10 +16,10 @@ local widget = require "widget"
 local playBtn
 
 -- 'onRelease' event listener for playBtn
-local function onPlayBtnRelease()
+local function mainMenuFunction()
 	
 	-- go to level1.lua scene
-	composer.gotoScene( "scenes.levels.level1", "fromRight", 500 )
+	composer.gotoScene( "scenes.menu", "fade", 500 )
 	
 	return true	-- indicates successful touch
 end
@@ -33,45 +33,100 @@ function scene:create( event )
 	-- e.g. add display objects to 'sceneGroup', add touch listeners, etc.
 
 	-- display a background image
-	local background = display.newImageRect( "images/select.png", display.contentWidth, display.contentHeight)
+	local background = display.newImageRect( "images/background.png", display.contentWidth, display.contentHeight*1.5)
 	background.anchorX = 0
-	background.anchorY = 0
-	background.x, background.y = 0, 0
-	
-	-- create/position logo/title image on upper-half of the screen
-	local titleLogo = display.newImageRect( "images/logo.png", 264, 150 )
-	titleLogo.x = display.contentWidth * 0.5
-	titleLogo.y = 100
-	
-	-- create a widget button (which will loads level1.lua on release)
-	playBtn = widget.newButton{
-		label="Play Now",
-		labelColor = { default={0}, over={128} },
-		default="images/select.png",
-		-- over="images/button-over.png",
-		-- width=154, height=50,
-		onRelease = onPlayBtnRelease	-- event listener function
-	}
-	playBtn.x = display.contentWidth*0.5
-	playBtn.y = display.contentHeight - 150
+	background.anchorY = 0.1
+	sceneGroup:insert( background )
 
 	-- create a widget button (which will loads level1.lua on release)
-	levelSelect = widget.newButton{
-		label="Select Level",
+	mainMenu = widget.newButton{
+		label="Main Menu",
 		labelColor = { default={1,0,1}, over={128} },
 		default="images/button.png",
 		over="images/button-over.png",
-		width=154, height=20,
-		onRelease = levelSelectFunction	-- event listener function
+		width=15, height=20,
+		onRelease = mainMenuFunction	-- event listener function
 	}
-	levelSelect.x = display.contentWidth*0.5
-	levelSelect.y = display.contentHeight - 190
+	mainMenu.x = display.contentWidth*0.5
+	mainMenu.y = display.contentHeight - 30
+
+
+	local shelfX = display.contentWidth/4
+	local shelfY = display.contentHeight/5
+	for i=0,8,1 do 
+		local shelf = display.newImageRect( "images/shelf.png", 80, 80 )
+		sceneGroup:insert( shelf )
+		shelf.x = shelfX
+		shelf.y = shelfY
+		if (i+1)%3 == 0 then
+			shelfX = display.contentWidth/4
+			shelfY = shelfY + 70
+		else
+			shelfX = shelfX + display.contentWidth/4
+		end
+	end
+
+
+	local level1 = widget.newButton{
+		label="Level 1",
+		labelColor = { default={128}, over={128} },
+		width=15, height=20,
+		onRelease = mainMenuFunction	-- event listener function
+	}
+	level1.x = display.contentWidth/4
+	level1.y = display.contentHeight/5
+	local level2 = widget.newButton{
+		label="Level 2",
+		labelColor = { default={128}, over={128} },
+		width=15, height=20,
+		onRelease = mainMenuFunction	-- event listener function
+	}
+	level2.x = display.contentWidth/2
+	level2.y = display.contentHeight/5
+	local level3 = widget.newButton{
+		label="Level 3",
+		labelColor = { default={128}, over={128} },
+		width=15, height=20,
+		onRelease = mainMenuFunction	-- event listener function
+	}
+	level3.x = 3*display.contentWidth/4
+	level3.y = display.contentHeight/5
+	local level4 = widget.newButton{
+		label="Level 4",
+		labelColor = { default={128}, over={128} },
+		width=15, height=20,
+		onRelease = mainMenuFunction	-- event listener function
+	}
+	level4.x = display.contentWidth/4
+	level4.y = display.contentHeight/5 + 70
+	local level5 = widget.newButton{
+		label="Level 5",
+		labelColor = { default={128}, over={128} },
+		width=15, height=20,
+		onRelease = mainMenuFunction	-- event listener function
+	}
+	level5.x = display.contentWidth/2
+	level5.y = display.contentHeight/5 + 70
+	local level6 = widget.newButton{
+		label="Level 6",
+		labelColor = { default={128}, over={128} },
+		width=15, height=20,
+		onRelease = mainMenuFunction	-- event listener function
+	}
+	level6.x = 3*display.contentWidth/4
+	level6.y = display.contentHeight/5 + 70
 	
 	-- all display objects must be inserted into group
-	sceneGroup:insert( background )
-	sceneGroup:insert( titleLogo )
-	sceneGroup:insert( levelSelect)
-	sceneGroup:insert( playBtn )
+	
+
+	sceneGroup:insert( level1)
+	sceneGroup:insert( level2)
+	sceneGroup:insert( level3)
+	sceneGroup:insert( level4)
+	sceneGroup:insert( level5)
+	sceneGroup:insert( level6)
+
+	sceneGroup:insert( mainMenu )
 end
 
 function scene:show( event )
